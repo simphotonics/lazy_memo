@@ -88,9 +88,9 @@ The source code listed above is available in folder [example].
 
 Please file feature requests and bugs at the [issue tracker].
 
-[CachedObjectFactory]: https://pub.dev/documentation/directed_graph/latest/lazy_memo/CachedObjectFactory.html
+[CachedObjectFactory]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/CachedObjectFactory.html
 
-[issue tracker]: https://github.com/simphotonics/lazy/issues
+[issue tracker]: https://github.com/simphotonics/lazy_memo/issues
 
 [example]: https://github.com/simphotonics/lazy/tree/master/example
 
@@ -102,4 +102,4 @@ Please file feature requests and bugs at the [issue tracker].
 
 [null-safety]: https://dart.dev/null-safety
 
-[Lazy]: https://pub.dev/documentation/directed_graph/latest/lazy_memo/Lazy-class.html
+[Lazy]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/Lazy-class.html

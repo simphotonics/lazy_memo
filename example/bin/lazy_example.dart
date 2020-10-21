@@ -1,4 +1,4 @@
-import 'package:lazy/lazy_memo.dart';
+import 'package:lazy_memo/lazy_memo.dart';
 
 // To run this program navigate to
 // the folder 'lazy/example'

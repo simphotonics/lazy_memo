@@ -1,11 +1,11 @@
-name: lazy
+name: lazy_memo
 
 description: Supports creating cached objects that are initialized on
   demand. Null-safety must be enabled to use this package.
 
 version: 0.0.1-nullsafety
 
-homepage: https://github.com/simphotonics/lazy
+homepage: https://github.com/simphotonics/lazy_memo
 
 environment:
   sdk: '>=2.10.0 <3.0.0'

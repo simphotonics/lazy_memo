@@ -1,4 +1,4 @@
-import 'package:lazy/lazy_memo.dart';
+import 'package:lazy_memo/lazy_memo.dart';
 import 'package:minimal_test/minimal_test.dart';
 
 Future<T> later<T>(T t) async {

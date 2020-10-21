@@ -51,8 +51,7 @@ pub run --enable-experiment=non-nullable minimal_test:minimal_test.dart
 
 
 
-# ================
-# Running examples
-# ================
-
+echo
+echo -e "${BLUE}=== Running Examples $PWD/example ${RESET}"
+echo
 dart --enable-experiment=non-nullable example/bin/lazy_example.dart

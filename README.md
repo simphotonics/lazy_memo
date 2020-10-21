@@ -30,7 +30,7 @@ he package uses [null-safety] features and requires Dart SDK version `>=2.10.0`.
 2. The constructor requires a callback [`CachedObjectFactory`][CachedObjectFactory] that returns an  object of type `T`.
 3. To access the cached object, the lazy variable is called like a function (see example below).
 4. The optional parameter `updateCache` can be used to request an update of the cached object.
-   If `updateCache` is true, the object is re-initialized using the (current version) of the callback [`CacheObjectFactory`][CachedObjectFactory].
+   If `updateCache` is true, the object is re-initialized using the (current version) of the callback [`CachedObjectFactory`][CachedObjectFactory].
 
 
 ```Dart

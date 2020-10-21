@@ -1,7 +1,8 @@
 
 # Lazy Variables for Dart
 
-[![Build Status](https://travis-ci.com/simphotonics/lazy.svg?branch=main)](https://travis-ci.com/simphotonics/lazy)
+[![Build Status](https://travis-ci.com/simphotonics/lazy_memo.svg?branch=main)](https://travis-ci.com/simphotonics/lazy_memo)
+
 
 ## Introduction
 

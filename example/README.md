@@ -1,6 +1,6 @@
 
 
-[![Build Status](https://travis-ci.com/simphotonics/lazy.svg?branch=main)](https://travis-ci.com/simphotonics/lazy)
+[![Build Status](https://travis-ci.com/simphotonics/lazy_memo.svg?branch=main)](https://travis-ci.com/simphotonics/lazy_memo)
 
 ## Directed Graph - Example
 The file [`lazy_example.dart`][example.dart] (see folder *bin*) contains a short program that demonstrates how to create

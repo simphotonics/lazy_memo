@@ -97,7 +97,7 @@ Please file feature requests and bugs at the [issue tracker].
 
 [issue tracker]: https://github.com/simphotonics/lazy_memo/issues
 
-[example]: https://github.com/simphotonics/lazy/tree/master/example
+[example]: https://github.com/simphotonics/lazy_memo/tree/master/example
 
 [lazy_memo]: https://pub.dev/packages/lazy_memo
 

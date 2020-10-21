@@ -23,7 +23,8 @@ The package [`lazy_memo`][lazy_memo] provides the generic class [`Lazy<T>`][Lazy
 
 ## Usage
 
-To use this library include [`lazy_memo`][lazy_memo] as a dependency in your pubspec.yaml file. The package uses [null-safety] features and requires Dart SDK version `>=2.10.0`.
+To use this library include [`lazy_memo`][lazy_memo] as a dependency in your pubspec.yaml file.
+he package uses [null-safety] features and requires Dart SDK version `>=2.10.0`.
 
 1. Lazy variables are declared using the constructor of the generic class [`Lazy<T>`][Lazy].
 2. The constructor requires a callback [`CachedObjectFactory`][CachedObjectFactory] that returns an  object of type `T`.
@@ -66,15 +67,17 @@ void main() {
 
 ## Dependent Lazy Variables
 
-It is possible to declare dependent lazy variables by using the value of one
-variable when declaring another lazy variable. In the example above, `y` depends
-on `x` since the callback passed to the constructor of `y` references
-`x`.
+It is possible to declare dependent lazy variables by using an
+expression containing one lazy variable to declare another lazy variable.
 
-Since `x(updateCache: true)`, every time the cached object of `y` is updated, an
-update of `x` is triggered.
+In the example above, `y` depends on `x` since the callback passed
+to the constructor of `y` references `x`.
 
-Notice that in the example shown above the updated content of `y` is printed first.
+The optional parameter `updateCache` can be used strategically to trigger and update of cached variables along the
+depenedency tree. Since the expression `x(updateCache: true)` is called
+every time the cached object of `y` is updated, an
+update of `y` triggers an update of `x`.
+
 
 An update of the cached object can also be requested by calling the
 method: `updateCache()`.

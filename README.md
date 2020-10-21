@@ -73,13 +73,14 @@ expression containing one lazy variable to declare another lazy variable.
 In the example above, `y` depends on `x` since the callback passed
 to the constructor of `y` references `x`.
 
-The optional parameter `updateCache` can be used strategically to trigger and update of cached variables along the
-depenedency tree. Since the expression `x(updateCache: true)` is called
-every time the cached object of `y` is updated, an
-update of `y` triggers an update of `x`.
+The optional parameter `updateCache` can be used strategically to trigger an
+update of cached variables along the
+dependency tree.
 
+In the example above, the expression `x(updateCache: true)` is called
+every time `y` is updated. Therefore, an update of `y` triggers an update of `x`.
 
-An update of the cached object can also be requested by calling the
+Note: An update of a lazy variable can also be requested by calling the
 method: `updateCache()`.
 
 ## Examples

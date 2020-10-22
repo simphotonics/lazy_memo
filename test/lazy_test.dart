@@ -8,6 +8,21 @@ Future<T> later<T>(T t) async {
 void main() {
   var number = 29;
   final lazyInt = Lazy<int>(() => number);
+  group('Getter isUpToDate:', () {
+    test('Uninitialized', () {
+      final lazy = Lazy<num>(() => 5);
+      expect(lazy.isUpToDate, false);
+      expect(lazy(), 5);
+      expect(lazy.isUpToDate, true);
+    });
+    test('Updated', () {
+      final lazy = Lazy<num>(() => 7);
+      expect(lazy(), 7);
+      lazy.updateCache();
+      expect(lazy.isUpToDate, false);
+    });
+  });
+
   group('Cache:', () {
     test('initial value', () {
       expect(lazyInt(), 29);

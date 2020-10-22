@@ -18,13 +18,14 @@ A different strategy to minimize CPU usage is to delay the initialization of var
 [Lazy initialization][lazy_initialization] is a common concept and is particularly useful in
 event driven scenarios where there is no definite execution path and a certain variable might not be used at all.
 
-The package [`lazy_memo`][lazy_memo] provides the generic class [`Lazy<T>`][Lazy] which can be used to define cached variables that are initialized by a callback when first accessed.
+The package [`lazy_memo`][lazy_memo] provides the generic class [`Lazy<T>`][Lazy]
+ which can be used to define cached variables that are initialized by a callback when first accessed.
 
 
 ## Usage
 
 To use this library include [`lazy_memo`][lazy_memo] as a dependency in your pubspec.yaml file.
-he package uses [null-safety] features and requires Dart SDK version `>=2.10.0`.
+The package uses [null-safety] features and requires Dart SDK version `>=2.10.0`.
 
 1. Lazy variables are declared using the constructor of the generic class [`Lazy<T>`][Lazy].
 2. The constructor requires a callback [`CachedObjectFactory`][CachedObjectFactory] that returns an  object of type `T`.

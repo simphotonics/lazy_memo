@@ -1,5 +1,5 @@
 # 0.0.2-nullsafety
-- Added getter `isUpToDate`. 
+- Added getter `isUpToDate`.
 
 ## 0.0.1-nullsafety
 

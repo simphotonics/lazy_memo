@@ -34,6 +34,10 @@ class Lazy<T> {
     _isUpToDate = false;
   }
 
+  /// Returns `true` if the cached object has been initialized and is
+  /// up-to-date.
+  bool get isUpToDate => _isUpToDate;
+
   @override
   String toString() {
     return 'Lazy<$T>: ${call()}';

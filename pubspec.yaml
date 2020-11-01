@@ -13,5 +13,5 @@ environment:
 dependencies: null
 
 dev_dependencies:
-  minimal_test: ^0.1.0-nullsafety
+  minimal_test: ^0.1.2-nullsafety
   pedantic: ^1.9.2

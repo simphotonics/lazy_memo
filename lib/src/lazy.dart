@@ -1,3 +1,7 @@
+/// A function taking a single argument of type `A` and
+/// returning an object of type `T`.
+typedef SingleArgumentFunction<A, T> = T Function(A arg);
+
 /// Callback used to lazily create an object of type `T`.
 typedef CachedObjectFactory<T> = T Function();
 
@@ -42,4 +46,51 @@ class Lazy<T> {
   String toString() {
     return 'Lazy<$T>: ${call()}';
   }
+}
+
+/// Class representing a memoized function
+/// requiring a single argument of type `A`
+/// and returning an object of type `T`.
+///
+/// The parameter `functionTable` may be used to
+/// initialize the function lookup table with certain
+/// function argument: function value pairs.
+class LazyFunction<A, T> {
+  LazyFunction(this.func);
+
+  /// Function being memoized.
+  final SingleArgumentFunction<A, T> func;
+
+  /// Function table.
+  final _functionTable = <A, T>{};
+
+  /// Returns the result of calling `func` or a cached result if available.
+  /// * The cache is initialized when first accessed.
+  /// * To re-initialize the cached function result use the
+  ///   optional parameter `recalculate`.
+  T call(
+    A arg, {
+    bool recalculate = false,
+  }) {
+    if (recalculate) {
+      return _functionTable[arg] = func(arg);
+    } else {
+      return _functionTable[arg] ??= func(arg);
+    }
+  }
+
+  /// Clears the cached function table.
+  ///
+  /// To clear the function table for selected values only,
+  /// provide a non-empty iterable `args`.
+  void clearFunctionTable({Iterable<A>? args}) {
+    if (args == null) {
+      _functionTable.clear();
+    } else {
+      args.forEach((key) => _functionTable.remove(key));
+    }
+  }
+
+  /// Returns a copy of the current function table.
+  Map<A, T> get functionTable => Map<A, T>.from(_functionTable);
 }

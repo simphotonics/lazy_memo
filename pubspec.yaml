@@ -1,8 +1,8 @@
 name: lazy_memo
 
-description: Supports creating cached objects that are initialized on
-  demand and memoized single argument functions. Null-safety must be
-  enabled to use this package.
+description: Helper classes for defining lazy variables
+  and memoized functions.
+  Null-safety must be enabled to use this package.
 
 version: 0.0.3-nullsafety
 

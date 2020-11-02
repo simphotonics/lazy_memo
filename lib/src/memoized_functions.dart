@@ -13,8 +13,8 @@ typedef DoubleArgumentFunction<A1, A2, T> = T Function(A1 arg1, A2 arg2);
 /// The parameter `functionTable` may be used to
 /// initialize the function lookup table with certain
 /// function argument: function value pairs.
-class LazyFunction<A, T> {
-  LazyFunction(this.func);
+class MemoizedFunction<A, T> {
+  MemoizedFunction(this.func);
 
   /// Function being memoized.
   final SingleArgumentFunction<A, T> func;
@@ -55,8 +55,8 @@ class LazyFunction<A, T> {
 
 /// Class representing a memoized function requiring two arguments of type
 /// `A1` and `A2`, respectively, and returning an object of type `T`.
-class LazyFunction2<A1, A2, T> {
-  LazyFunction2(this.func);
+class MemoizedFunction2<A1, A2, T> {
+  MemoizedFunction2(this.func);
   final DoubleArgumentFunction<A1, A2, T> func;
 
   /// Function table

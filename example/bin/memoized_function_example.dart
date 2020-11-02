@@ -26,10 +26,10 @@ num _polynomial(num x, Iterable<num> c) {
 void main() {
   print('Running lazy_function_example.dart.\n');
 
-  // Lazy function
+  // Memoized function
 
-  // Lazy function
-  final factorial = LazyFunction<int, int>((x) => _factorial(x));
+  // Memoized function
+  final factorial = MemoizedFunction<int, int>((x) => _factorial(x));
 
   print('-------- Factorial ------------');
   print('Calculates and stores the result');
@@ -44,8 +44,8 @@ void main() {
   print('Cached result:');
   print('factorial(12) = ${factorial(12)}');
 
-  // Lazy function with two arguments
-  final polynomial = LazyFunction2(_polynomial);
+  // Memoized function with two arguments
+  final polynomial = MemoizedFunction2(_polynomial);
   print('\n-------- Polynomial ------------');
   print('Calculates and stores the result of: ');
 

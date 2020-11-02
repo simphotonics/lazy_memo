@@ -6,8 +6,8 @@ Future<T> later<T>(T t) async {
 }
 
 void main() {
-  group('Lazy function', () {
-    final square = LazyFunction<num, num>((x) => x * x);
+  group('Memoized function', () {
+    final square = MemoizedFunction<num, num>((x) => x * x);
     test('Value', () {
       square.clearFunctionTable();
       expect(square(13), 169);
@@ -26,8 +26,8 @@ void main() {
     });
   });
 
-  group('Lazy function returning Future', () async {
-    final futureCube = LazyFunction<num, Future<num>>((x) => later<num>(
+  group('Memoized function returning Future', () async {
+    final futureCube = MemoizedFunction<num, Future<num>>((x) => later<num>(
           x * x * x,
         ));
 

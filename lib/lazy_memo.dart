@@ -4,4 +4,4 @@
 library lazy_memo;
 
 export 'src/lazy.dart';
-export 'src/lazy_functions.dart';
+export 'src/memoized_functions.dart';

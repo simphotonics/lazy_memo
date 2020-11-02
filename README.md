@@ -18,10 +18,8 @@ A different strategy to minimize CPU usage is to delay the initialization of var
 [Lazy initialization][lazy_initialization] is a common concept and is particularly useful in
 event driven scenarios where there is no definite execution path and a certain variable might not be used at all.
 
-The package [`lazy_memo`][lazy_memo] provides the generic class [`Lazy<T>`][Lazy]
-which can be used to define cached variables that are initialized by a callback when first accessed.
-The class [][] represents a single argument memoized function.
-
+The package [`lazy_memo`][lazy_memo] provides the generic classes that can be used to define
+lazy variables and memoized functions.
 
 ## Usage
 
@@ -46,7 +44,7 @@ import 'package:lazy/lazy.dart';
 // # dart --enable-experiment==non-nullable bin/lazy_example.dart
 //
 // followed by enter.
-
+[lazy_example.dart]: https://github.com/simphotonics/lazy_memo/blob/master/example/bin/lazy_example.dart
 void main() {
   print('Running lazy_example.dart.\n');
 
@@ -93,7 +91,6 @@ void main() {
  ```
 </details>
 
-
 #### Dependent Lazy Variables
 
 It is possible to declare dependent lazy variables by using an
@@ -112,10 +109,11 @@ every time `sampleMean` is updated. Therefore, an update of `sampleMean` trigger
 Note: An update of a lazy variable can also be requested by calling the
 method: `updateCache()`.
 
-### Memoized - Lazy Functions
 
-Memoized functions maintain a lookup table of previously calculated results. When called, the
-function checks if it was called previously with the same set of arguments.
+### Memoized Functions
+
+Memoized functions maintain a lookup table of previously calculated results. When called,
+a memoized function checks if it was called previously with the same set of arguments.
 If that is the case it will return a cached result.
 
 Memoizing a function comes at the cost of additional indirections,
@@ -127,7 +125,7 @@ Examples include: repeatedly accessing statistics of a large
 data sample, calculating the factorial of an integer,
 repeatedly evaluating higher degree polynomials.
 
-The example below demonstrates how to define the *lazy functions*
+The example below demonstrates how to define the *memoized functions*
 `factorial` and `polynomial`.
 
 ```Dart
@@ -159,10 +157,10 @@ num _polynomial(num x, Iterable<num> c) {
 void main() {
   print('Running lazy_function_example.dart.\n');
 
-  // Lazy function
+  // Memoized function
 
-  // Lazy function
-  final factorial = LazyFunction<int, int>((x) => _factorial(x));
+  // Memoized function
+  final factorial = MemoizedFunction<int, int>((x) => _factorial(x));
 
   print('-------- Factorial ------------');
   print('Calculates and stores the result');
@@ -177,8 +175,8 @@ void main() {
   print('Cached result:');
   print('factorial(12) = {factorial(12)}');
 
-  // Lazy function with two arguments
-  final polynomial = LazyFunction2(_polynomial);
+  // Memoized function with two arguments
+  final polynomial = MemoizedFunction2(_polynomial);
   print('\n-------- Polynomial ------------');
   print('Calculates and stores the result of: ');
 
@@ -202,7 +200,7 @@ void main() {
 <details>  <summary> Click to show console output. </summary>
 
  ```Console
- $ dart --enable-experiment=non-nullable example/bin/lazy_function_example.dart
+ $ dart --enable-experiment=non-nullable example/bin/memoized_function_example.dart
  Running lazy_function_example.dart.
 
  -------- Factorial ------------

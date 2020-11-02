@@ -199,6 +199,33 @@ void main() {
   print(polynomial(2, [2, -9, 10, 11, 15]));
 }
 ```
+<details>  <summary> Click to show console output. </summary>
+
+ ```Console
+ $ dart example/bin/lazy_function_example.dart
+ Running lazy_function_example.dart.
+
+ -------- Factorial ------------
+ Calculates and stores the result
+ factorial(12) = 479001600
+
+ Function table:
+ {12: 479001600}
+
+ Cached result:
+ factorial(12) = 479001600
+
+ -------- Polynomial ------------
+ Calculates and stores the result of:
+ polynomial(2, [2, -9, 10, 11, 15]): 352
+
+ The current function table
+ {2: {[2, -9, 10, 11, 15]: 352}}
+
+ Returns a cached result.
+ 352
+ ```
+</details>
 
 
 ## Examples

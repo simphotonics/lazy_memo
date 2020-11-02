@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:lazy_memo/lazy_memo.dart';
 
 // To run this program navigate to
@@ -9,18 +11,30 @@ import 'package:lazy_memo/lazy_memo.dart';
 // followed by enter.
 void main() {
   print('Running lazy_example.dart.\n');
-  final list = <int>[1, 2, 3, 4, 5, 6, 7];
 
-  // Initialize lazy variables
-  final x = Lazy<int>(() => list.reduce((sum, current) => sum += current));
-  final y = Lazy<double>(() => x(updateCache: true) / 10.0);
+  final random = Random();
+  final mean = 4.0;
 
-  print('Initial value of x: ${x()}'); // 'Initial value of x: 28'
-  print('Initial value of y: ${y()}\n'); // 'Initial value of y: 2.8'
+  // Generating a random sample following an exponential distribution.
+  print('Generating random sample ...');
+  final sample = List<double>.generate(
+      100, (_) => -mean * log(1.0 - random.nextDouble()));
 
-  list.add(8);
+  // Initializing lazy variables
+  final sampleSum = Lazy<double>(
+    () => sample.reduce((sum, current) => sum += current),
+  );
+  final sampleMean =
+      Lazy<double>(() => sampleSum(updateCache: true) / sample.length);
 
-  print('Updated value of y: '
-      '${y(updateCache: true)}');      // 'Updated value of y: 3.6'
-  print('Updated value of x: ${x()}'); // 'Updated value of x: 36'
+  print('Initial value of sampleSum: ${sampleSum()}');
+  print('Initial value of sampleMean: ${sampleMean()}\n');
+
+  // Adding outliers
+  print('Adding outliers:');
+  sample.addAll([100.0, 120.0]);
+
+  print('Updated value of sampleMean: '
+      '${sampleMean(updateCache: true)}');
+  print('Updated value of sampleSum: ${sampleSum()}');
 }

@@ -94,19 +94,19 @@ void main() {
 
 It is possible to declare dependent lazy variables by using an
 expression containing one lazy variable to declare another lazy variable.
-
 In the example above, `sampleMean` depends on `sampleSum` since the callback passed
 to the constructor of `sampleMean` references `sampleSum`.
 
 The optional parameter `updateCache` can be used strategically to trigger an
 update of cached variables along the
-dependency tree.
-
-In the example above, the expression `x(updateCache: true)` is called
-every time `sampleMean` is updated. Therefore, an update of `sampleMean` triggers an update of `sampleSum`.
+dependency tree. In the example above, the expression `x(updateCache: true)`
+is called every time `sampleMean` is updated.
+Therefore, an update of `sampleMean` triggers an update of `sampleSum`.
 
 Note: An update of a lazy variable can also be requested by calling the
 method: `updateCache()`.
+
+------
 
 
 ### Memoized Functions

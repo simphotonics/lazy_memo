@@ -202,7 +202,7 @@ void main() {
 <details>  <summary> Click to show console output. </summary>
 
  ```Console
- $ dart example/bin/lazy_function_example.dart
+ $ dart --enable-experiment=non-nullable example/bin/lazy_function_example.dart
  Running lazy_function_example.dart.
 
  -------- Factorial ------------

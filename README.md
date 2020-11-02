@@ -19,7 +19,7 @@ A different strategy to minimize CPU usage is to delay the initialization of var
 event driven scenarios where there is no definite execution path and a certain variable might not be used at all.
 
 The package [`lazy_memo`][lazy_memo] provides generic classes that can be used to define
-[lazy variables](#lazy-variables) and **memoized functions**.
+[lazy variables](#lazy-variables) and [memoized functions](#memoized-functions).
 
 ## Usage
 

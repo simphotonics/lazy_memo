@@ -77,6 +77,22 @@ void main() {
   print('Updated value of sampleSum: ${sampleSum()}');
 }
 ```
+<details>  <summary> Click to show console output. </summary>
+
+ ```Console
+ $ dart --enable-experiment=non-nullable example/bin/lazy_example.dart
+ Running lazy_example.dart.
+
+ Generating random sample ...
+ Initial value of sampleSum: 415.9556128306705
+ Initial value of sampleMean: 4.159556128306705
+
+ Adding outliers:
+ Updated value of sampleMean: 6.234858949320299
+ Updated value of sampleSum: 635.9556128306705
+ ```
+</details>
+
 
 #### Dependent Lazy Variables
 
@@ -112,7 +128,7 @@ data sample, calculating the factorial of an integer,
 repeatedly evaluating higher degree polynomials.
 
 The example below demonstrates how to define the *lazy functions*
-`factorial` and `polynomial`. 
+`factorial` and `polynomial`.
 
 ```Dart
 import 'package:lazy_memo/lazy_memo.dart';

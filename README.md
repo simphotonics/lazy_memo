@@ -44,7 +44,6 @@ import 'package:lazy/lazy.dart';
 // # dart --enable-experiment==non-nullable bin/lazy_example.dart
 //
 // followed by enter.
-[lazy_example.dart]: https://github.com/simphotonics/lazy_memo/blob/master/example/bin/lazy_example.dart
 void main() {
   print('Running lazy_example.dart.\n');
 

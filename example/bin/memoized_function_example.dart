@@ -17,12 +17,9 @@ num _polynomial(num x, Iterable<num> c) {
 }
 
 // To run this program navigate to
-// the folder 'lazy/example'
-// in your terminal and type:
+// the root folder of your local copy of 'lazy_memo' and use the command:
 //
-// # dart --enable-experiment==non-nullable bin/lazy_function_example.dart
-//
-// followed by enter.
+// # dart example/bin/lazy_function_example.dart
 void main() {
   print('Running lazy_function_example.dart.\n');
 

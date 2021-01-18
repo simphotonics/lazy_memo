@@ -3,12 +3,9 @@ import 'dart:math';
 import 'package:lazy_memo/lazy_memo.dart';
 
 // To run this program navigate to
-// the folder 'lazy/example'
-// in your terminal and type:
+// the root folder of your local copy of 'lazy_memo' and use the command:
 //
-// # dart --enable-experiment==non-nullable bin/lazy_example.dart
-//
-// followed by enter.
+// # dart example/bin/lazy_example.dart
 void main() {
   print('Running lazy_example.dart.\n');
 
@@ -17,8 +14,8 @@ void main() {
 
   // Generating a random sample following an exponential distribution.
   print('Generating random sample ...');
-  final sample = List<double>.generate(
-      100, (_) => -mean * log(1.0 - random.nextDouble()));
+  final sample =
+      List<double>.generate(100, (_) => -mean * log(1.0 - random.nextDouble()));
 
   // Initializing lazy variables
   final sampleSum = Lazy<double>(

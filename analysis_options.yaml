@@ -6,8 +6,3 @@ include: package:pedantic/analysis_options.yaml
 #   rules:
 #     - camel_case_types
 
-analyzer:
-  enable-experiment:
-    - non-nullable
-#   exclude:
-#     - path/to/excluded/files/**

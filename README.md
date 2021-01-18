@@ -16,7 +16,8 @@ was coined [memoization][memoization].
 
 A different strategy to minimize CPU usage is to delay the initialization of variables.
 [Lazy initialization][lazy_initialization] is a common concept and is particularly useful in
-event driven scenarios where there is no definite execution path and a certain variable might not be used at all.
+event driven scenarios where there is no definite execution path and a certain
+variable might never be used.
 
 The package [`lazy_memo`][lazy_memo] provides generic classes that can be used to define
 [lazy variables](#lazy-variables) and [memoized functions](#memoized-functions).
@@ -24,7 +25,7 @@ The package [`lazy_memo`][lazy_memo] provides generic classes that can be used t
 ## Usage
 
 To use this library include [`lazy_memo`][lazy_memo] as a dependency in your pubspec.yaml file.
-The package uses [null-safety] features and requires Dart SDK version `>=2.10.0`.
+The package uses [null-safety] features and requires Dart SDK version `>=2.12.0-0`.
 
 ### Lazy Variables
 
@@ -37,13 +38,6 @@ The package uses [null-safety] features and requires Dart SDK version `>=2.10.0`
 ```Dart
 import 'package:lazy/lazy.dart';
 
-// To run this program navigate to
-// the folder 'lazy/example'
-// in your terminal and type:
-//
-// # dart --enable-experiment==non-nullable bin/lazy_example.dart
-//
-// followed by enter.
 void main() {
   print('Running lazy_example.dart.\n');
 
@@ -77,7 +71,7 @@ void main() {
 <details>  <summary> Click to show console output. </summary>
 
  ```Console
- $ dart --enable-experiment=non-nullable example/bin/lazy_example.dart
+ $ dart example/bin/lazy_example.dart
  Running lazy_example.dart.
 
  Generating random sample ...
@@ -149,10 +143,10 @@ The example below demonstrates how to define the *memoized functions*
   }
 
   // To run this program navigate to
-  // the folder 'lazy/example'
-  // in your terminal and type:
+  // root folder of you local copy of the package lazy_memo
+  // in use the command:
   //
-  // # dart --enable-experiment==non-nullable bin/lazy_function_example.dart
+  // # dart example/bin/lazy_function_example.dart
   //
   // followed by enter.
   void main() {
@@ -203,7 +197,7 @@ The example below demonstrates how to define the *memoized functions*
 <details>  <summary> Click to show console output. </summary>
 
  ```Console
- $ dart --enable-experiment=non-nullable example/bin/memoized_function_example.dart
+ $ dart example/bin/memoized_function_example.dart
  Running lazy_function_example.dart.
 
  -------- Factorial ------------

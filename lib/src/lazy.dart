@@ -1,5 +1,5 @@
 /// Callback used to lazily create an object of type `T`.
-typedef CachedObjectFactory<T> = T Function();
+typedef ObjectFactory<T> = T Function();
 
 /// A class that caches an object of type `T`.
 /// * The cache is populated when the object is first accessed.
@@ -8,7 +8,7 @@ class Lazy<T> {
   Lazy(this.objectFactory);
 
   /// Callback used to create the cached object.
-  final CachedObjectFactory<T> objectFactory;
+  final ObjectFactory<T> objectFactory;
 
   late T _cache;
   bool _isUpToDate = false;

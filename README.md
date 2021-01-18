@@ -30,10 +30,10 @@ The package uses [null-safety] features and requires Dart SDK version `>=2.12.0-
 ### Lazy Variables
 
 1. Lazy variables are declared using the constructor of the generic class [`Lazy<T>`][Lazy].
-2. The constructor requires a callback [`CachedObjectFactory`][CachedObjectFactory] that returns an  object of type `T`.
+2. The constructor requires a callback [`ObjectFactory`][ObjectFactory] that returns an  object of type `T`.
 3. To access the cached object, the lazy variable is called like a function (see example below).
 4. The optional parameter `updateCache` can be used to request an update of the cached object.
-   If `updateCache` is true, the object is re-initialized using the (current version) of the callback [`CachedObjectFactory`][CachedObjectFactory].
+   If `updateCache` is true, the object is re-initialized using the (current version) of the callback [`ObjectFactory`][ObjectFactory].
 
 ```Dart
 import 'package:lazy/lazy.dart';
@@ -233,7 +233,7 @@ The source code listed above is available in folder [example].
 
 Please file feature requests and bugs at the [issue tracker].
 
-[CachedObjectFactory]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/CachedObjectFactory.html
+[ObjectFactory]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/ObjectFactory.html
 
 [issue tracker]: https://github.com/simphotonics/lazy_memo/issues
 

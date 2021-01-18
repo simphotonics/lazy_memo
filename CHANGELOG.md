@@ -1,3 +1,7 @@
+# 0.1.0-nullsafety
+
+- Set min. Dart SDK version 2.12.0-0.
+
 # 0.0.3-nullsafety
 
 - Added class `MemoizedFunction`, representing a single-argument memoized function.

@@ -2,17 +2,16 @@ name: lazy_memo
 
 description: Helper classes for defining lazy variables
   and memoized functions.
-  Null-safety must be enabled to use this package.
 
-version: 0.0.3-nullsafety
+version: 0.1.0-nullsafety
 
 homepage: https://github.com/simphotonics/lazy_memo
 
 environment:
-  sdk: '>=2.10.0 <3.0.0'
+  sdk: '>=2.12.0-0 <3.0.0'
 
 dependencies: null
 
 dev_dependencies:
-  minimal_test: ^0.1.2-nullsafety
+  minimal_test: ^2.0.0-nullsafety
   pedantic: ^1.9.2

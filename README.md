@@ -25,7 +25,7 @@ The package [`lazy_memo`][lazy_memo] provides generic classes that can be used t
 ## Usage
 
 To use this library include [`lazy_memo`][lazy_memo] as a dependency in your pubspec.yaml file.
-The package uses [null-safety] features and requires Dart SDK version `>=2.12.0-0`.
+The package uses [null-safety] features and requires Dart SDK version `>=2.12.0`.
 
 ### Lazy Variables
 

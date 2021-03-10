@@ -1,24 +1,25 @@
 import 'package:lazy_memo/lazy_memo.dart';
-import 'package:minimal_test/minimal_test.dart';
+import 'package:test/test.dart';
 
 Future<T> later<T>(T t) async {
   return await Future.delayed(Duration(milliseconds: 200), () => t);
 }
 
 void main() {
-  group('Memoized function', () {
+  group('Memoized function: ', () {
     final square = MemoizedFunction<num, num>((x) => x * x);
-    test('Value', () {
+    test('value', () {
       square.clearFunctionTable();
       expect(square(13), 169);
       expect(square(13.5), 13.5 * 13.5);
       expect(square.functionTable, {13: 169, 13.5: 182.25});
     });
-    test('Clearing function table', () {
+    test('clearing function table', () {
       square.clearFunctionTable();
       expect(square.functionTable, <num, num>{});
     });
-    test('Selectively clearing function table', () {
+    test('selectively clearing function table', () {
+      square.clearFunctionTable();
       square(8);
       square(10);
       square.clearFunctionTable(args: [10]);
@@ -26,30 +27,30 @@ void main() {
     });
   });
 
-  group('Memoized function returning Future', () async {
+  group('Memoized function returning \'Future\':', () {
     final futureCube = MemoizedFunction<num, Future<num>>((x) => later<num>(
           x * x * x,
         ));
 
-    test('Initial functionTable', () {
-      expect(futureCube.functionTable, <num, Future<num>>{});
+    test('Value', () async {
+      expect(await futureCube(7), 7 * 7 * 7);
+      expect(await futureCube(8), 8 * 8 * 8);
     });
 
-    final sevenCubed = await futureCube(7);
-    final eightCubed = await futureCube(8);
-
-    test('Value', () {
-      expect(sevenCubed, 7 * 7 * 7);
-      expect(eightCubed, 8 * 8 * 8);
+    test('function table', () async {
+      futureCube.clearFunctionTable();
+      await futureCube(87);
+      await futureCube(99);
+      expect(futureCube.functionTable.keys.toList(), [87, 99]);
     });
 
-    test('function table', () {
-      expect(futureCube.functionTable.keys.toList(), [7, 8]);
-    });
-
-    test('Selectively clearing function table', () {
-      futureCube.clearFunctionTable(args: [8]);
-      expect(futureCube.functionTable[8], null);
+    test('Selectively clearing function table', () async {
+      futureCube.clearFunctionTable();
+      await futureCube(87);
+      await futureCube(99);
+      futureCube.clearFunctionTable(args: [99]);
+      expect(await futureCube.functionTable[99], null);
+      expect(await futureCube.functionTable[87], 87 * 87 * 87);
     });
   });
 }

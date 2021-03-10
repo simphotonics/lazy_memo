@@ -45,8 +45,8 @@ dartanalyzer \
 echo
 echo -e "${CYAN}=== Testing $PWD...${RESET}"
 echo
-#pub run test -r expanded --test-randomize-ordering-seed=random
-pub run minimal_test:minimal_test.dart
+pub run test -r expanded --test-randomize-ordering-seed=random
+#pub run minimal_test:minimal_test.dart
 
 
 

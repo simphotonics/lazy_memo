@@ -1,3 +1,8 @@
+# 0.1.0
+
+- Removed ref. to experiment non-nullable. Set min. SDK version 2.12.0.
+- Switched back to default testing suite.
+
 # 0.1.0-nullsafety
 
 - Set min. Dart SDK version 2.12.0-0.

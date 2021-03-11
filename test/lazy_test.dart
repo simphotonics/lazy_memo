@@ -68,4 +68,46 @@ void main() {
       expect(await lazyFutureString(), 'Input has changed');
     });
   });
+
+  group('LazyList<int>:', () {
+    final lazyList = LazyList<int>(() => [1, 2, 3]);
+    test('cached list', () {
+      expect(lazyList(), [1, 2, 3]);
+    });
+    test('modifying list', () {
+      final list = lazyList();
+      list.add(4);
+      expect(lazyList(), [1, 2, 3]);
+      expect(list, [1, 2, 3, 4]);
+    });
+  });
+
+  group('LazySet<int>:', () {
+    final lazySet = LazySet<int>(() => {1, 2, 3});
+    test('cached set', () {
+      expect(lazySet(), {1, 2, 3});
+    });
+    test('modifying set', () {
+      final mySet = lazySet();
+      mySet.add(4);
+      expect(lazySet(), {1, 2, 3});
+      expect(mySet, {1, 2, 3, 4});
+    });
+  });
+
+  group('LazyMap<String, int>:', () {
+    final lazyMap = LazyMap<String, int>(
+      () => {'one': 1, 'two': 2, 'three': 3},
+    );
+    test('cached map', () {
+      expect(lazyMap(), {'one': 1, 'two': 2, 'three': 3});
+    });
+    test('modifying map', () {
+      final map = lazyMap();
+      map['four'] = 4;
+      expect(lazyMap(), {'one': 1, 'two': 2, 'three': 3});
+      expect(map, {'one': 1, 'two': 2, 'three': 3, 'four': 4});
+    });
+  });
+
 }

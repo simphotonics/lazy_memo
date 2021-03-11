@@ -100,6 +100,24 @@ Therefore, an update of `sampleMean` triggers an update of `sampleSum`.
 Note: An update of a lazy variable can also be requested by calling the
 method: `updateCache()`.
 
+#### Lazy Collections
+
+Lazy variable can be used to cache objects of type `List`, `Set`, `Map`, etc.
+```Dart
+final lazyList = Lazy<List<int>>(() => [1, 2, 3]);
+final list = lazyList();
+list.add(4); // lazyList() now returns: [1, 2, 3, 4]
+```
+In order to prevent users from (inadvertently) modifying the cached object one
+may use the classes `LazyList<T>`, `LazySet<T>`, and `LazyMap<K, V>`. These
+classes return a copy of the cached object.
+```Dart
+final lazyList = LazyList<int>(() => [1, 2, 3]);
+final list = lazyList();
+list.add(4);
+print(lazyList()); // Prints: [1, 2, 3].
+```
+
 ------
 
 

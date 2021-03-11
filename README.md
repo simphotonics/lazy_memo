@@ -102,7 +102,8 @@ method: `updateCache()`.
 
 #### Lazy Collections
 
-Lazy variable can be used to cache objects of type `List`, `Set`, `Map`, etc.
+Lazy variables can be used to cache objects of type `List`, `Set`, `Map`, etc.
+However, as the example below demonstrates, the cached object can be modified.
 ```Dart
 final lazyList = Lazy<List<int>>(() => [1, 2, 3]);
 final list = lazyList();

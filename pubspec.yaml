@@ -2,7 +2,7 @@ name: lazy_memo
 
 description: Helper classes for defining lazy variables and memoized functions.
 
-version: 0.1.0
+version: 0.1.1
 
 homepage: https://github.com/simphotonics/lazy_memo
 

@@ -1,3 +1,9 @@
+# 0.1.1
+
+- Added the classes `LazyList<T>`, `LazyMap<K, V>`, `LazySet<T>`.
+  These return a copy of the cached object to prevent external modification
+  of the cache. 
+
 # 0.1.0
 
 - Removed ref. to experiment non-nullable. Set min. SDK version 2.12.0.

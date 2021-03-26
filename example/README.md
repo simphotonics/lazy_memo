@@ -1,5 +1,3 @@
-
-
 [![Build Status](https://travis-ci.com/simphotonics/lazy_memo.svg?branch=main)](https://travis-ci.com/simphotonics/lazy_memo)
 
 ## Lazy Memo - Example

@@ -3,7 +3,6 @@
 
 [![Build Status](https://travis-ci.com/simphotonics/lazy_memo.svg?branch=main)](https://travis-ci.com/simphotonics/lazy_memo)
 
-
 ## Introduction
 
 Minimizing CPU and memory usage are two important goals of software optimization.

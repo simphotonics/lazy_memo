@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/simphotonics/lazy_memo.svg?branch=main)](https://travis-ci.com/simphotonics/lazy_memo)
+[![Dart](https://github.com/simphotonics/lazy_memo/actions/workflows/dart.yml/badge.svg)](https://github.com/simphotonics/lazy_memo/actions/workflows/dart.yml)
 
 ## Lazy Memo - Example
 The file [`lazy_example.dart`][lazy_example.dart] (see folder *bin*) contains a short program that demonstrates how to

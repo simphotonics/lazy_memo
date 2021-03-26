@@ -10,10 +10,12 @@ on:
     branches: [ main ]
     paths:
     - '**.dart'
+
   pull_request:
     branches: [ main ]
     paths:
     - '**.dart'
+    
   workflow_dispatch:
 
 jobs:

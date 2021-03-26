@@ -14,7 +14,11 @@ on:
     branches: [ main ]
     paths:
     - '**.dart'
-  workflow_dispatch
+  workflow_dispatch:
+    branches: [ main ]
+    paths:
+    - '**.dart'
+
 
 jobs:
   build:

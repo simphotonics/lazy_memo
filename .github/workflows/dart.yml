@@ -15,7 +15,7 @@ on:
     branches: [ main ]
     paths:
     - '**.dart'
-    
+
   workflow_dispatch:
 
 jobs:
@@ -47,6 +47,8 @@ jobs:
       - name: Run tests
         run: dart test
 
-      - name: Run example
+      - name: Run example 1
         run: dart example/bin/lazy_example.dart
+
+      - name: Run example 2
         run: dart example/bin/memoized_function_example.dart

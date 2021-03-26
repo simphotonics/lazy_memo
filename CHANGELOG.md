@@ -1,8 +1,12 @@
+# 0.1.2
+
+Migrated CI to github.
+
 # 0.1.1
 
 - Added the classes `LazyList<T>`, `LazyMap<K, V>`, `LazySet<T>`.
   These return a copy of the cached object to prevent external modification
-  of the cache. 
+  of the cache.
 
 # 0.1.0
 

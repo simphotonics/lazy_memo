@@ -20,10 +20,15 @@ variable might never be used.
 The package [`lazy_memo`][lazy_memo] provides generic classes that can be used to define
 [lazy variables](#lazy-variables) and [memoized functions](#memoized-functions).
 
+Note: Since version 2.12 Dart provides `late` variables. These are variables
+that can be initialized *once* before they are used. By contrast,
+the lazy variables provided by this
+package can be marked for re-initialisation if the input arguments of
+their initializer function have changed.
+
 ## Usage
 
 To use this library include [`lazy_memo`][lazy_memo] as a dependency in your pubspec.yaml file.
-The package uses [null-safety] features and requires Dart SDK version `>=2.12.0`.
 
 ### Lazy Variables
 

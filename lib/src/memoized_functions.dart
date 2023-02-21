@@ -45,7 +45,9 @@ class MemoizedFunction<A, T> {
     if (args == null) {
       _functionTable.clear();
     } else {
-      args.forEach((key) => _functionTable.remove(key));
+      for (var key in args) {
+        _functionTable.remove(key);
+      }
     }
   }
 

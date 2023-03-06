@@ -1,3 +1,7 @@
+## 0.1.4
+
+- Update docs.
+
 ## 0.1.3
 
 - Updated dependencies.

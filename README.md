@@ -13,18 +13,17 @@ was coined [memoization][memoization].
 
 
 A different strategy to minimize CPU usage is to delay the initialization of variables.
-[Lazy initialization][lazy_initialization] is a common concept and is particularly useful in
-event driven scenarios where there is no definite execution path and a certain
-variable might never be used.
+[Lazy initialization][lazy_initialization] is a common concept and is particularly
+useful in event driven scenarios where there is no definite execution path and
+a certain variable might never be used.
 
-The package [`lazy_memo`][lazy_memo] provides generic classes that can be used to define
-[lazy variables](#lazy-variables) and [memoized functions](#memoized-functions).
+The package [`lazy_memo`][lazy_memo] provides generic classes that can be used
+to define [lazy variables](#lazy-variables) and
+[memoized functions](#memoized-functions).
 
-Note: Since version 2.12 Dart provides `late` variables. These are variables
-that can be initialized *once* before they are used. By contrast,
-the lazy variables provided by this
-package can be marked for re-initialisation if the input arguments of
-their initializer function have changed.
+To define lazy variables that are going to be initalized *once* use Dart's
+`late` modifier. To define lazy variables that can be marked for
+re-initialization you may use the generic class [`Lazy<T>`][Lazy].
 
 ## Usage
 
@@ -33,10 +32,15 @@ To use this library include [`lazy_memo`][lazy_memo] as a dependency in your pub
 ### Lazy Variables
 
 1. Lazy variables are declared using the constructor of the generic class [`Lazy<T>`][Lazy].
-2. The constructor requires a callback [`ObjectFactory`][ObjectFactory] that returns an  object of type `T`.
-3. To access the cached object, the lazy variable is called like a function (see example below).
-4. The optional parameter `updateCache` can be used to request an update of the cached object.
-   If `updateCache` is true, the object is re-initialized using the (current version) of the callback [`ObjectFactory`][ObjectFactory].
+2. The constructor requires a callback, [`ObjectFactory`][ObjectFactory],
+   that returns an  object of type `T`.
+3. To access the cached object, the lazy variable is called like a function
+   (see example below).
+4. The optional parameter `updateCache` can be used to request an
+   update of the cached object.
+   If `updateCache` is true, the object is re-initialized
+   by calling the object factory [`ObjectFactory`][ObjectFactory] with the
+   current value of the input arguments.
 
 ```Dart
 import 'package:lazy/lazy.dart';

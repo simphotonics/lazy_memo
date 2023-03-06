@@ -28,8 +28,8 @@ class Lazy<T> {
     }
   }
 
-  /// After calling this function the cached object is
-  /// (lazily) re-initialized.
+  /// After calling this function the cached object will be
+  /// (lazily) re-initialized when it is next accessed.
   void updateCache() {
     _isUpToDate = false;
   }

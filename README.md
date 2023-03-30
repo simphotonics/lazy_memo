@@ -115,7 +115,7 @@ passed to the constructor of `sampleMean` references `sampleSum`.
 
 The optional parameter `updateCache` can be used strategically to trigger an
 update of cached variables along the
-dependency tree. In the example above, the expression `x(updateCache: true)`
+dependency tree. In the example above, `sampleSum(updateCache: true)`
 is called every time `sampleMean` is updated.
 Therefore, an update of `sampleMean` triggers an update of `sampleSum`.
 

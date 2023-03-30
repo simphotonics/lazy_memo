@@ -8,6 +8,18 @@ Future<T> later<T>(T t) async {
 void main() {
   group('Memoized function: ', () {
     final square = MemoizedFunction<num, num>((x) => x * x);
+    test('initial function table', () {
+      final quad = MemoizedFunction(
+        (num x) => x * x * x * x,
+        functionTable: {4: 256, 5: 625},
+      );
+      expect(quad.functionTable, <num, num>{4: 256, 5: 625});
+      expect(quad(6), 6 * 6 * 6 * 6);
+      expect(
+        quad.functionTable,
+        isA<Map<num, num>>().having((map) => map.containsKey(6), 'key', true),
+      );
+    });
     test('value', () {
       square.clearFunctionTable();
       expect(square(13), 169);
@@ -51,6 +63,34 @@ void main() {
       futureCube.clearFunctionTable(args: [99]);
       expect(await futureCube.functionTable[99], null);
       expect(await futureCube.functionTable[87], 87 * 87 * 87);
+    });
+  });
+
+  group('Memoized function 2: ', () {
+    final xy = MemoizedFunction2((num x, num y) => x * y);
+    test('initial function table', () {
+      final xy = MemoizedFunction2((num x, num y) => x * y, functionTable: {
+        3: {6: 18}
+      });
+      expect(xy.functionTable, <num, Map<num, num>>{
+        3: {6: 18}
+      });
+      expect(xy(8, 9), 72);
+      expect(
+        xy.functionTable,
+        <num, Map<num, num>>{
+          3: {6: 18},
+          8: {9: 72}
+        },
+      );
+    });
+    test('value', () {
+      xy.clearFunctionTable();
+      expect(xy(0, 1), 0);
+    });
+    test('clearing function table', () {
+      xy.clearFunctionTable();
+      expect(xy.functionTable, <num, Map<num, num>>{});
     });
   });
 }

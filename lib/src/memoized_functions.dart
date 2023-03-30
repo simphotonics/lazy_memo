@@ -10,11 +10,16 @@ typedef DoubleArgumentFunction<A1, A2, T> = T Function(A1 arg1, A2 arg2);
 /// requiring a single argument of type `A`
 /// and returning an object of type `T`.
 ///
-/// The parameter `functionTable` may be used to
-/// initialize the function lookup table with certain
-/// function argument: function value pairs.
 class MemoizedFunction<A, T> {
-  MemoizedFunction(this.func);
+  /// Constructor:
+  /// The parameter `functionTable` may be used to
+  /// initialize the function lookup table with certain
+  /// {function argument: function value pairs}.
+  MemoizedFunction(this.func, {Map<A, T> functionTable = const {}}) {
+    if (functionTable.isNotEmpty) {
+      _functionTable.addAll(functionTable);
+    }
+  }
 
   /// Function being memoized.
   final SingleArgumentFunction<A, T> func;
@@ -55,10 +60,21 @@ class MemoizedFunction<A, T> {
   Map<A, T> get functionTable => Map<A, T>.from(_functionTable);
 }
 
-/// Class representing a memoized function requiring two arguments of type
+/// Class representing a memoized function requiring arguments of type
 /// `A1` and `A2`, respectively, and returning an object of type `T`.
 class MemoizedFunction2<A1, A2, T> {
-  MemoizedFunction2(this.func);
+  /// Constructor:
+  /// The parameter `functionTable` may be used to
+  /// initialize the function lookup table with certain
+  /// {function argument1: {function argument 2: function value pairs} }
+  /// entries.
+  MemoizedFunction2(this.func, {Map<A1, Map<A2, T>> functionTable = const {}}) {
+    if (functionTable.isNotEmpty) {
+      _functionTable.addAll(functionTable);
+    }
+  }
+
+  /// The memoized function.
   final DoubleArgumentFunction<A1, A2, T> func;
 
   /// Function table
@@ -74,13 +90,14 @@ class MemoizedFunction2<A1, A2, T> {
     bool recalculate = false,
   }) {
     if (recalculate) {
-      return func(arg1, arg2);
+      _functionTable[arg1] = {arg2: func(arg1, arg2)};
+      return _functionTable[arg1]![arg2]!;
     } else {
-      if (_functionTable[arg1] == null) {
+      if (_functionTable.containsKey(arg1)) {
+        return _functionTable[arg1]![arg2] ??= func(arg1, arg2);
+      } else {
         _functionTable[arg1] = {arg2: func(arg1, arg2)};
         return _functionTable[arg1]![arg2]!;
-      } else {
-        return _functionTable[arg1]![arg2] ??= func(arg1, arg2);
       }
     }
   }

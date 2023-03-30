@@ -1,3 +1,7 @@
+## 0.1.5
+- Added parameter `functionTable` to constructors of `MemoizedFunction`
+  and `MemoizedFunction2`.
+
 ## 0.1.4
 
 - Update docs.

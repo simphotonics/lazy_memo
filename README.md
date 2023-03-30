@@ -13,7 +13,7 @@ was coined [memoization][memoization].
 
 
 A different strategy to minimize CPU usage is to delay the initialization of variables.
-[Lazy initialization][lazy_initialization] is a common concept and is particularly
+[Lazy initialization][lazy_initialization] is particularly
 useful in event driven scenarios where there is no definite execution path and
 a certain variable might never be used.
 
@@ -21,17 +21,31 @@ The package [`lazy_memo`][lazy_memo] provides generic classes that can be used
 to define [lazy variables](#lazy-variables) and
 [memoized functions](#memoized-functions).
 
-To define lazy variables that are going to be initalized *once* use Dart's
-`late` modifier. To define lazy variables that can be marked for
-re-initialization you may use the generic class [`Lazy<T>`][Lazy].
 
 ## Usage
 
 To use this library include [`lazy_memo`][lazy_memo] as a dependency in your pubspec.yaml file.
+<br>
 
-### Lazy Variables
+### 1. Lazy Variables
 
-1. Lazy variables are declared using the constructor of the generic class [`Lazy<T>`][Lazy].
+Note: To define variables that are going to be initalized *once* use Dart's
+`late` modifier.
+
+To define lazy variables that can be marked for re-initialization
+use the generic class [`Lazy<T>`][Lazy].
+It is often useful to declare *lazy* variables
+using Darts *late* modifier since it makes it possible to
+initialize e.g. a final instance variable at the point of definition:
+```Dart
+class A{
+  late final _value = Lazy<double>(() => costlyCalculation());
+  double value get => _value();
+}
+```
+
+1. Lazy variables are declared using the constructor of
+   the generic class [`Lazy<T>`][Lazy].
 2. The constructor requires a callback, [`ObjectFactory`][ObjectFactory],
    that returns an  object of type `T`.
 3. To access the cached object, the lazy variable is called like a function
@@ -90,13 +104,14 @@ void main() {
  Updated value of sampleSum: 635.9556128306705
  ```
 </details>
+<br>
 
-#### Dependent Lazy Variables
+### 2. Dependent Lazy Variables
 
 It is possible to declare dependent lazy variables by using an
 expression containing one lazy variable to declare another lazy variable.
-In the example above, `sampleMean` depends on `sampleSum` since the callback passed
-to the constructor of `sampleMean` references `sampleSum`.
+In the example above, `sampleMean` depends on `sampleSum` since the callback
+passed to the constructor of `sampleMean` references `sampleSum`.
 
 The optional parameter `updateCache` can be used strategically to trigger an
 update of cached variables along the
@@ -106,8 +121,9 @@ Therefore, an update of `sampleMean` triggers an update of `sampleSum`.
 
 Note: An update of a lazy variable can also be requested by calling the
 method: `updateCache()`.
+<br>
 
-#### Lazy Collections
+### 3. Lazy Collections
 
 Lazy variables can be used to cache objects of type `List`, `Set`, `Map`, etc.
 However, as the example below demonstrates, the cached object can be modified.
@@ -127,17 +143,18 @@ print(lazyList()); // Prints: [1, 2, 3].
 ```
 
 ------
+<br>
 
+### 4. Memoized Functions
 
-### Memoized Functions
-
-Memoized functions maintain a lookup table of previously calculated results. When called,
+Memoized functions maintain a lookup table of previously calculated results.
+When called,
 a memoized function checks if it was called previously with the same set of arguments.
 If that is the case it will return a cached result.
 
 Memoizing a function comes at the cost of additional indirections,
 higher memory usage, and the complexity of having to maintain a function table.
-For this reason, memoization should be only used for
+For this reason, memoization should be used for
 **computationally expensive** functions that are likely to be
 called **repeatedly** with the **same** set of **input arguments**.
 Examples include: repeatedly accessing statistics of a large

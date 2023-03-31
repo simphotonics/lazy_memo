@@ -1,4 +1,10 @@
+## 0.1.6
+
+- Updated examples and docs. Added getters returning the argument type,
+  return type, and function signature of memoized functions.
+
 ## 0.1.5
+
 - Added parameter `functionTable` to constructors of `MemoizedFunction`
   and `MemoizedFunction2`.
 

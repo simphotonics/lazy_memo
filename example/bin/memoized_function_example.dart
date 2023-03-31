@@ -52,7 +52,7 @@ void main() {
   print('Cached result:');
   print('factorial(12) = ${factorial(12)}');
 
-  print('\n----- k-combinations of n object -----');
+  print('\n----- k-combinations of n objects -----');
 
   print('Calculates and stores the result of: ');
   print('c(10, 5): ${c(10, 5)}');

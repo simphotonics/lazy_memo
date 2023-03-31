@@ -159,7 +159,7 @@ data sample, calculating the factorial of an integer,
 repeatedly evaluating higher degree polynomials.
 
 The example below demonstrates how to define the *memoized functions*
-`factorial` and `polynomial`.
+`factorial(n)` and `c(n, k)`, k-combinations of n objects.
 
 <details>  <summary> Click to show souce code. </summary>
 
@@ -218,7 +218,7 @@ The example below demonstrates how to define the *memoized functions*
     print('Cached result:');
     print('factorial(12) = ${factorial(12)}');
 
-    print('\n----- k-combinations of n object -----');
+    print('\n----- k-combinations of n objects -----');
 
     print('Calculates and stores the result of: ');
     print('c(10, 5): ${c(10, 5)}');
@@ -250,7 +250,7 @@ The example below demonstrates how to define the *memoized functions*
  Cached result:
  factorial(12) = 479001600
 
- ----- k-combinations of n object -----
+ ----- k-combinations of n objects -----
  Calculates and stores the result of:
  c(10, 5): 30240
 

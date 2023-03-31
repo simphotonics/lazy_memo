@@ -37,6 +37,9 @@ void main() {
       square.clearFunctionTable(args: [10]);
       expect(square.functionTable, {8: 64});
     });
+    test('signature', () {
+      expect(square.signature, SingleArgumentFunction<num, num>);
+    });
   });
 
   group('Memoized function returning \'Future\':', () {

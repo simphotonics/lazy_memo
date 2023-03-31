@@ -9,17 +9,26 @@ typedef DoubleArgumentFunction<A1, A2, T> = T Function(A1 arg1, A2 arg2);
 /// Class representing a memoized function
 /// requiring a single argument of type `A`
 /// and returning an object of type `T`.
-///
 class MemoizedFunction<A, T> {
-  /// Constructor:
-  /// The parameter `functionTable` may be used to
-  /// initialize the function lookup table with certain
-  /// {function argument: function value pairs}.
+  /// Constructs a instance of [MemoizedFunction].
+  /// * `func`: A function with signature: `A Function(T)`.
+  /// * `functionTable`: may be used to
+  ///   initialize the function lookup table with
+  ///   {function argument: function value pairs}.
   MemoizedFunction(this.func, {Map<A, T> functionTable = const {}}) {
     if (functionTable.isNotEmpty) {
       _functionTable.addAll(functionTable);
     }
   }
+
+  /// Returns the function argument type `A`.
+  Type get argumentType => A;
+
+  /// Returns the function return type `T`.
+  Type get returnType => T;
+
+  /// Returns the typedef of the memoized function.
+  Type get signature => SingleArgumentFunction<A, T>;
 
   /// Function being memoized.
   final SingleArgumentFunction<A, T> func;
@@ -80,6 +89,15 @@ class MemoizedFunction2<A1, A2, T> {
   /// Function table
   final _functionTable = <A1, Map<A2, T>>{};
 
+  /// Returns the function argument types `[A1, A2]`.
+  List<Type> get argumentTypes => [A1, A2];
+
+  /// Returns the function return type `T`.
+  Type get returnType => T;
+
+  /// Returns the typedef of the memoized function.
+  Type get signature => DoubleArgumentFunction<A1, A2, T>;
+
   /// Returns the result of calling `func` or a cached result if available.
   /// * The cache is initialized when first accessed.
   /// * To re-initialize the cached function result use the
@@ -104,7 +122,7 @@ class MemoizedFunction2<A1, A2, T> {
 
   /// Returns a copy of the current function table.
   Map<A1, Map<A2, T>> get functionTable =>
-      Map<A1, Map<A2, T>>.from(_functionTable);
+      Map<A1, Map<A2, T>>.of(_functionTable);
 
   /// Clears the cached function table.
   void clearFunctionTable() {

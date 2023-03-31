@@ -1,20 +1,36 @@
 import 'package:lazy_memo/lazy_memo.dart';
 
-// Computationally expensive function:
+/// Computationally expensive function with a single argument.
 int _factorial(int x) => (x == 0 || x == 1) ? 1 : x * _factorial(x - 1);
 
-/// Returns the value of the polynomial:
-/// `c.first + c[1]*x + ... + c.last* pow(x, c.length)`,
-/// where the entries of `c` represent the polynomial coefficients.
-num _polynomial(num x, Iterable<num> c) {
-  if (c.isEmpty) {
+/// Returns the factorial of a positive integer.
+final factorial = MemoizedFunction(
+  _factorial,
+  functionTable: {8: 40320}, // Optional initial function table.
+);
+
+/// Computationally expensive function with two arguments.
+int _c(int n, int k) {
+  if (k > n ~/ 2) {
+    return _c(n, n - k);
+  } else if (k > n) {
     return 0;
-  } else if (c.length == 1) {
-    return c.first;
   } else {
-    return c.first + x * _polynomial(x, c.skip(1));
+    int result = 1;
+    for (var i = n; i > n - k; i--) {
+      result *= i;
+    }
+    return result;
   }
 }
+
+/// Returns the number of k-combinations of n distinct objects. More formally,
+/// let S be a set containing n distinct objects.
+/// Then the number of subsets containing k objects is given by c(n, k).
+/// * c(n, n) = 1
+/// * c(n, k) = c(n, n - k)
+/// * c(n, 0) = 1
+final c = MemoizedFunction2(_c);
 
 // To run this program navigate to
 // the root folder of your local copy of 'lazy_memo' and use the command:
@@ -23,12 +39,7 @@ num _polynomial(num x, Iterable<num> c) {
 void main() {
   print('Running lazy_function_example.dart.\n');
 
-  // Memoized function
-
-  // Memoized function
-  final factorial = MemoizedFunction<int, int>((x) => _factorial(x));
-
-  print('-------- Factorial ------------');
+  print('------------- Factorial --------------');
   print('Calculates and stores the result');
   print('factorial(12) = ${factorial(12)}\n');
 
@@ -41,24 +52,16 @@ void main() {
   print('Cached result:');
   print('factorial(12) = ${factorial(12)}');
 
-  // Memoized function with two arguments
-  final polynomial = MemoizedFunction2(_polynomial);
-  print('\n-------- Polynomial ------------');
-  print('Calculates and stores the result of: ');
+  print('\n----- k-combinations of n object -----');
 
-  print('polynomial(2, [2, -9, 10, 11, 15]): ${polynomial(2, [
-    2,
-    -9,
-    10,
-    11,
-    15
-  ])}');
+  print('Calculates and stores the result of: ');
+  print('c(10, 5): ${c(10, 5)}');
   print('');
 
   print('The current function table');
-  print(polynomial.functionTable);
+  print(c.functionTable);
   print('');
 
   print('Returns a cached result.');
-  print(polynomial(2, [2, -9, 10, 11, 15]));
+  print('c(10, 5): ${c(10, 5)}');
 }

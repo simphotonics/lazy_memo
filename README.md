@@ -57,53 +57,50 @@ class A{
    current value of the input arguments.
 
 ```Dart
-import 'package:lazy/lazy.dart';
+import 'dart:math';
 
+import 'package:lazy_memo/lazy_memo.dart';
+
+// To run this program navigate to
+// the root folder of your local copy of 'lazy_memo' and use the command:
+//
+// # dart example/bin/lazy_example.dart
 void main() {
   print('Running lazy_example.dart.\n');
 
   final random = Random();
   final mean = 4.0;
 
-  // Generating a random sample following an exponential distribution.
-  print('Generating random sample ...');
+  print('Generating a random sample with size 5000 and mean: 4.0:');
+  // Generating a random sample
   final sample = List<double>.generate(
-      100, (_) => -mean * log(1.0 - random.nextDouble()));
+      5000, (_) => -mean * log(1.0 - random.nextDouble()));
 
   // Initializing lazy variables
   final sampleSum = Lazy<double>(
     () => sample.reduce((sum, current) => sum += current),
   );
-  final sampleMean =
-      Lazy<double>(() => sampleSum(updateCache: true) / sample.length);
 
-  print('Initial value of sampleSum: ${sampleSum()}');
-  print('Initial value of sampleMean: ${sampleMean()}\n');
+  // Calculating sample mean
+  final sampleMean = Lazy<double>(
+    () => sampleSum(updateCache: true) / sample.length,
+  );
+
+  print('  Initial value of sampleSum: ${sampleSum()}');
+  print('  Initial value of sampleMean: ${sampleMean()}\n');
+  print('Adding outliers to random sample: [1500.0, 1200.0]');
 
   // Adding outliers
-  print('Adding outliers:');
-  sample.addAll([100.0, 120.0]);
+  sample.addAll([1500.0, 1200.0]);
 
-  print('Updated value of sampleMean: '
+  print('  Updated value of sampleMean: '
       '${sampleMean(updateCache: true)}');
-  print('Updated value of sampleSum: ${sampleSum()}');
+  print('  Updated value of sampleSum: ${sampleSum()}');
 }
+
 ```
-<details>  <summary> Click to show console output. </summary>
-
- ```Console
- $ dart example/bin/lazy_example.dart
- Running lazy_example.dart.
-
- Generating random sample ...
- Initial value of sampleSum: 415.9556128306705
- Initial value of sampleMean: 4.159556128306705
-
- Adding outliers:
- Updated value of sampleMean: 6.234858949320299
- Updated value of sampleSum: 635.9556128306705
- ```
 </details>
+
 <br>
 
 ### 2. Dependent Lazy Variables
@@ -169,36 +166,46 @@ The example below demonstrates how to define the *memoized functions*
  ```Dart
   import 'package:lazy_memo/lazy_memo.dart';
 
-  // Computationally expensive function:
+  /// Computationally expensive function with a single argument.
   int _factorial(int x) => (x == 0 || x == 1) ? 1 : x * _factorial(x - 1);
 
-  /// Returns the value of the polynomial:
-  /// `c.first + c[1]*x + ... + c.last* pow(x, c.length)`,
-  /// where the entries of `c` represent the polynomial coefficients.
-  num _polynomial(num x, Iterable<num> c) {
-    if (c.isEmpty) {
+  /// Returns the factorial of a positive integer.
+  final factorial = MemoizedFunction(
+    _factorial,
+    functionTable: {8: 40320}, // Optional initial function table.
+  );
+
+  /// Computationally expensive function with two arguments.
+  int _c(int n, int k) {
+    if (k > n ~/ 2) {
+      return _c(n, n - k);
+    } else if (k > n) {
       return 0;
-    } else if (c.length == 1) {
-      return c.first;
     } else {
-      return c.first + x * _polynomial(x, c.skip(1));
+      int result = 1;
+      for (var i = n; i > n - k; i--) {
+        result *= i;
+      }
+      return result;
     }
   }
 
+  /// Returns the number of k-combinations of n distinct objects. More formally,
+  /// let S be a set containing n distinct objects.
+  /// Then the number of subsets containing k objects is given by c(n, k).
+  /// * c(n, n) = 1
+  /// * c(n, k) = c(n, n - k)
+  /// * c(n, 0) = 1
+  final c = MemoizedFunction2(_c);
+
   // To run this program navigate to
-  // root folder of you local copy of the package lazy_memo
-  // in use the command:
+  // the root folder of your local copy of 'lazy_memo' and use the command:
   //
   // # dart example/bin/lazy_function_example.dart
-  //
-  // followed by enter.
   void main() {
     print('Running lazy_function_example.dart.\n');
 
-    // Memoized function
-    final factorial = MemoizedFunction<int, int>((x) => _factorial(x));
-
-    print('-------- Factorial ------------');
+    print('------------- Factorial --------------');
     print('Calculates and stores the result');
     print('factorial(12) = ${factorial(12)}\n');
 
@@ -209,62 +216,52 @@ The example below demonstrates how to define the *memoized functions*
 
     // Returning a cached result.
     print('Cached result:');
-    print('factorial(12) = {factorial(12)}');
+    print('factorial(12) = ${factorial(12)}');
 
-    // Memoized function with two arguments
-    final polynomial = MemoizedFunction2(_polynomial);
-    print('\n-------- Polynomial ------------');
+    print('\n----- k-combinations of n object -----');
+
     print('Calculates and stores the result of: ');
-
-    print('polynomial(2, [2, -9, 10, 11, 15]): ${polynomial(2, [
-      2,
-      -9,
-      10,
-      11,
-      15
-    ])}');
+    print('c(10, 5): ${c(10, 5)}');
     print('');
 
     print('The current function table');
-    print(polynomial.functionTable);
+    print(c.functionTable);
     print('');
 
     print('Returns a cached result.');
-    print(polynomial(2, [2, -9, 10, 11, 15]));
+    print('c(10, 5): ${c(10, 5)}');
   }
- ```
 
+```
 </details>
-
-
 <details>  <summary> Click to show console output. </summary>
 
  ```Console
- $ dart example/bin/memoized_function_example.dart
+ $ dart example/bin/lazy_example.dart
  Running lazy_function_example.dart.
 
- -------- Factorial ------------
+ ------------- Factorial --------------
  Calculates and stores the result
  factorial(12) = 479001600
 
  Function table:
- {12: 479001600}
+ {8: 40320, 12: 479001600}
 
  Cached result:
  factorial(12) = 479001600
 
- -------- Polynomial ------------
+ ----- k-combinations of n object -----
  Calculates and stores the result of:
- polynomial(2, [2, -9, 10, 11, 15]): 352
+ c(10, 5): 30240
 
  The current function table
- {2: {[2, -9, 10, 11, 15]: 352}}
+ {10: {5: 30240}}
 
  Returns a cached result.
- 352
+ c(10, 5): 30240
  ```
-</details>
 
+</details>
 
 ## Examples
 

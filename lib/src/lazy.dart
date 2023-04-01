@@ -2,7 +2,7 @@
 typedef ObjectFactory<T> = T Function();
 
 /// A class that caches an object of type `T`.
-/// * The cache is populated when the object is first accessed.
+/// The cache is populated when the object is first accessed.
 class Lazy<T> {
   /// Constructs a lazy object.
   Lazy(this.objectFactory);

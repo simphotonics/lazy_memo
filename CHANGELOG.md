@@ -1,3 +1,7 @@
+## 0.1.7
+
+- Updated links.
+
 ## 0.1.6
 
 - Updated examples and docs. Added getters returning the argument type,

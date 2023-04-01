@@ -18,8 +18,8 @@ useful in event driven scenarios where there is no definite execution path and
 a certain variable might never be used.
 
 The package [`lazy_memo`][lazy_memo] provides generic classes that can be used
-to define [lazy variables](#lazy-variables) and
-[memoized functions](#memoized-functions).
+to define [lazy variables](#1-lazy-variables) and
+[memoized functions](#4-memoized-functions).
 
 
 ## Usage
@@ -118,6 +118,7 @@ Therefore, an update of `sampleMean` triggers an update of `sampleSum`.
 
 Note: An update of a lazy variable can also be requested by calling the
 method: `updateCache()`.
+
 <br>
 
 ### 3. Lazy Collections
@@ -138,9 +139,7 @@ final list = lazyList();
 list.add(4);
 print(lazyList()); // Prints: [1, 2, 3].
 ```
-
 ------
-<br>
 
 ### 4. Memoized Functions
 
@@ -268,15 +267,9 @@ The example below demonstrates how to define the *memoized functions*
 The source code listed above is available in folder [example].
 
 
-
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker].
-
-
-
-
-[ObjectFactory]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/ObjectFactory.html
 
 [issue tracker]: https://github.com/simphotonics/lazy_memo/issues
 
@@ -286,8 +279,10 @@ Please file feature requests and bugs at the [issue tracker].
 
 [lazy_initialization]: https://en.wikipedia.org/wiki/Lazy_initialization
 
+[Lazy]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/Lazy-class.html
+
 [memoization]: https://en.wikipedia.org/wiki/Memoization
 
 [null-safety]: https://dart.dev/null-safety
 
-[Lazy]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/Lazy-class.html
+[ObjectFactory]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/ObjectFactory.html

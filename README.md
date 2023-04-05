@@ -190,7 +190,7 @@ The example below demonstrates how to define the *memoized functions*
       return result;
     }
   }
-  
+
   /// Returns the number of k-combinations of n distinct objects. More formally,
   /// let S be a set containing n distinct objects.
   /// Then the number of subsets containing k objects is given by c(n, k).
@@ -253,13 +253,13 @@ The example below demonstrates how to define the *memoized functions*
 
  ----- k-combinations of n objects -----
  Calculates and stores the result of:
- c(10, 5): 30240
-
+ c(10, 5): 252
+ 
  The current function table
- {10: {5: 30240}}
-
+ {10: {5: 252}}
+ 
  Returns a cached result.
- c(10, 5): 30240
+ c(10, 5): 252
  ```
 
 </details>

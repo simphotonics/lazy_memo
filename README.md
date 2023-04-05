@@ -182,13 +182,15 @@ The example below demonstrates how to define the *memoized functions*
       return 0;
     } else {
       int result = 1;
+      int m = 1;
       for (var i = n; i > n - k; i--) {
-        result *= i;
+        result = (result * i) ~/ m;
+        m++;
       }
       return result;
     }
   }
-
+  
   /// Returns the number of k-combinations of n distinct objects. More formally,
   /// let S be a set containing n distinct objects.
   /// Then the number of subsets containing k objects is given by c(n, k).

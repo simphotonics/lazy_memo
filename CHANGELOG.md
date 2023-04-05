@@ -1,3 +1,7 @@
+### 0.1.8
+
+- Updated example and docs (memoized functions).
+
 ## 0.1.7
 
 - Updated links.

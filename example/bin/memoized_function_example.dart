@@ -17,8 +17,10 @@ int _c(int n, int k) {
     return 0;
   } else {
     int result = 1;
+    int m = 1;
     for (var i = n; i > n - k; i--) {
-      result *= i;
+      result = (result * i) ~/ m;
+      m++;
     }
     return result;
   }

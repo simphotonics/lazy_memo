@@ -30,7 +30,7 @@ void main() {
   print('  Initial value of sampleSum: ${sampleSum()}');
   print('  Initial value of sampleMean: ${sampleMean()}\n');
   print('Adding outliers to random sample: [1500.0, 1200.0]');
-  
+
   // Adding outliers
   sample.addAll([1500.0, 1200.0]);
 

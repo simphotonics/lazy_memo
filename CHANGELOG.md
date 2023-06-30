@@ -1,4 +1,7 @@
-### 0.1.8
+## 0.1.9
+- Added benchmark. Set min. SDK version to 3.0.0.
+
+## 0.1.8
 
 - Updated example and docs (memoized functions).
 

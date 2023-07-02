@@ -3,7 +3,7 @@ name: lazy_memo
 description: Lazy variables that can be marked for re-initialization and
   memoized single and double argument functions.
 
-version: 0.1.8
+version: 0.2.0
 
 homepage: https://github.com/simphotonics/lazy_memo
 

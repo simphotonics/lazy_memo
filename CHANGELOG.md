@@ -1,6 +1,10 @@
+## 0.2.0
+- Amended doc section lazy collections.
+
 ## 0.1.9
 
 - Added utility methods: `factorial` and `combinations`.
+- Added extension on int: `ToBigInt`.
 - Added benchmarks.
 
 

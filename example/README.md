@@ -1,7 +1,8 @@
 [![Dart](https://github.com/simphotonics/lazy_memo/actions/workflows/dart.yml/badge.svg)](https://github.com/simphotonics/lazy_memo/actions/workflows/dart.yml)
 
 ## Lazy Memo - Example
-The file [`lazy_example.dart`][lazy_example.dart] (see folder *bin*) contains a short program that demonstrates how to
+The file [`lazy_example.dart`][lazy_example.dart] (see folder *bin*)
+contains a short program that demonstrates how to
 define and use lazy variables.
 
 The program can be run in a terminal by navigating to the

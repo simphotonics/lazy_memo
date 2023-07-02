@@ -1,6 +1,5 @@
 import 'memoized_functions.dart';
 
-/// Computationally expensive function with a single argument.
 BigInt _factorial(BigInt x) {
   if (x == BigInt.zero || x == BigInt.one) {
     return BigInt.one;
@@ -15,13 +14,18 @@ BigInt _factorial(BigInt x) {
 /// [ArgumentError] if a negative argument is provided.
 final factorial = MemoizedFunction(_factorial);
 
+extension ToBigInt on int {
+  /// Converts this to [BigInt].
+  BigInt get big => BigInt.from(this);
+}
+
 /// Returns the number of k-combination of n distinct objects.
-int _c(int n, int k) {
-  if (n < 0) {
+BigInt _combinations(BigInt n, BigInt k) {
+  if (n < BigInt.zero) {
     throw ArgumentError.value(n, 'n', 'Arguments must be positive.');
   }
 
-  if (k < 0) {
+  if (k < BigInt.zero) {
     throw ArgumentError.value(k, 'k', 'Argument must be positive.');
   }
 
@@ -33,16 +37,14 @@ int _c(int n, int k) {
             'Found k');
   }
 
-  if (k > n ~/ 2) {
-    return _c(n, n - k);
-  } else if (k > n) {
-    return 0;
+  if (k > n ~/ BigInt.two) {
+    return _combinations(n, n - k);
   } else {
-    int result = 1;
-    int m = 1;
-    for (var i = n; i > n - k; i--) {
+    var result = BigInt.one;
+    var m = BigInt.one;
+    for (var i = n; i > n - k; i = i - BigInt.one) {
       result = (result * i) ~/ m;
-      m++;
+      m = m + BigInt.one;
     }
     return result;
   }
@@ -50,9 +52,11 @@ int _c(int n, int k) {
 
 /// Returns the number of k-combinations of n distinct objects. More formally,
 /// let S be a set containing n distinct objects.
-/// Then the number of subsets containing k objects is given by c(n, k).
-/// * c(n, n) = 1
-/// * c(n, k) = c(n, n - k)
-/// * c(n, 0) = 1
-/// Throws an error of type [ArgumentError] if a negative argument is provided.
-final combinations = MemoizedFunction2(_c);
+/// Then the number of subsets containing k objects is given by
+/// combinations(n, k).
+/// * combinations(n, n) = 1
+/// * combinations(n, k) = combinations(n, n - k)
+/// * combinations(n, 0) = 1
+/// Throws an error of type [ArgumentError] if a negative argument is provided
+/// or if n < k.
+final combinations = MemoizedFunction2(_combinations);

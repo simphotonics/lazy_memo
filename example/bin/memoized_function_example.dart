@@ -10,9 +10,9 @@ final factorial = MemoizedFunction(
 );
 
 /// Computationally expensive function with two arguments.
-int _c(int n, int k) {
+int _combinations(int n, int k) {
   if (k > n ~/ 2) {
-    return _c(n, n - k);
+    return _combinations(n, n - k);
   } else if (k > n) {
     return 0;
   } else {
@@ -28,11 +28,11 @@ int _c(int n, int k) {
 
 /// Returns the number of k-combinations of n distinct objects. More formally,
 /// let S be a set containing n distinct objects.
-/// Then the number of subsets containing k objects is given by c(n, k).
-/// * c(n, n) = 1
-/// * c(n, k) = c(n, n - k)
-/// * c(n, 0) = 1
-final c = MemoizedFunction2(_c);
+/// Then the number of subsets containing k objects is given by combinations(n, k).
+/// * combinations(n, n) = 1
+/// * combinations(n, k) = combinations(n, n - k)
+/// * combinations(n, 0) = 1
+final combinations = MemoizedFunction2(_combinations);
 
 // To run this program navigate to
 // the root folder of your local copy of 'lazy_memo' and use the command:
@@ -57,13 +57,13 @@ void main() {
   print('\n----- k-combinations of n objects -----');
 
   print('Calculates and stores the result of: ');
-  print('c(10, 5): ${c(10, 5)}');
+  print('combinations(10, 5): ${combinations(100, 70)}');
   print('');
 
   print('The current function table');
-  print(c.functionTable);
+  print(combinations.functionTable);
   print('');
 
   print('Returns a cached result.');
-  print('c(10, 5): ${c(10, 5)}');
+  print('combinations(10, 5): ${combinations(10, 5)}');
 }

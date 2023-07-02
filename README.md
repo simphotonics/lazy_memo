@@ -24,7 +24,8 @@ to define [lazy variables](#1-lazy-variables) and
 
 ## Usage
 
-To use this library include [`lazy_memo`][lazy_memo] as a dependency in your pubspec.yaml file.
+To use this library include [`lazy_memo`][lazy_memo] as a dependency
+in your pubspec.yaml file.
 <br>
 
 ### 1. Lazy Variables
@@ -158,7 +159,10 @@ data sample, calculating the factorial of an integer,
 repeatedly evaluating higher degree polynomials.
 
 The example below demonstrates how to define the *memoized functions*
-`factorial(n)` and `c(n, k)`, k-combinations of n objects.
+`factorial(n)` and `combinations(n, k)`, k-combinations of n objects.
+Note: For the sake of simplicity, validation of arguments is omitted. A
+complete version of these functions is provided with the library
+[`utils.dart`][utils].
 
 <details>  <summary> Click to show souce code. </summary>
 
@@ -175,9 +179,9 @@ The example below demonstrates how to define the *memoized functions*
   );
 
   /// Computationally expensive function with two arguments.
-  int _c(int n, int k) {
+  int _combinations(int n, int k) {
     if (k > n ~/ 2) {
-      return _c(n, n - k);
+      return _combinations(n, n - k);
     } else if (k > n) {
       return 0;
     } else {
@@ -193,11 +197,12 @@ The example below demonstrates how to define the *memoized functions*
 
   /// Returns the number of k-combinations of n distinct objects. More formally,
   /// let S be a set containing n distinct objects.
-  /// Then the number of subsets containing k objects is given by c(n, k).
-  /// * c(n, n) = 1
-  /// * c(n, k) = c(n, n - k)
-  /// * c(n, 0) = 1
-  final c = MemoizedFunction2(_c);
+  /// Then the number of subsets containing k objects is given
+  /// by combinations(n, k).
+  /// * combinations(n, n) = 1
+  /// * combinations(n, k) = combinations(n, n - k)
+  /// * combinations(n, 0) = 1
+  final combinations = MemoizedFunction2(_combinations);
 
   // To run this program navigate to
   // the root folder of your local copy of 'lazy_memo' and use the command:
@@ -222,7 +227,7 @@ The example below demonstrates how to define the *memoized functions*
     print('\n----- k-combinations of n objects -----');
 
     print('Calculates and stores the result of: ');
-    print('c(10, 5): ${c(10, 5)}');
+    print('combinations(10, 5): ${combinations(10, 5)}');
     print('');
 
     print('The current function table');
@@ -230,7 +235,7 @@ The example below demonstrates how to define the *memoized functions*
     print('');
 
     print('Returns a cached result.');
-    print('c(10, 5): ${c(10, 5)}');
+    print('combinations(10, 5): ${combinations(10, 5)}');
   }
 
 ```
@@ -253,20 +258,20 @@ The example below demonstrates how to define the *memoized functions*
 
  ----- k-combinations of n objects -----
  Calculates and stores the result of:
- c(10, 5): 252
- 
+ combinations(10, 5): 252
+
  The current function table
  {10: {5: 252}}
- 
+
  Returns a cached result.
- c(10, 5): 252
+ combinations(10, 5): 252
  ```
 
 </details>
 
 ## Examples
 
-The source code listed above is available in folder [example].
+The source code listed above is available in the folder [example].
 
 
 ## Features and bugs
@@ -275,7 +280,7 @@ Please file feature requests and bugs at the [issue tracker].
 
 [issue tracker]: https://github.com/simphotonics/lazy_memo/issues
 
-[example]: https://github.com/simphotonics/lazy_memo/tree/master/example
+[example]: https://github.com/simphotonics/lazy_memo/tree/main/example
 
 [lazy_memo]: https://pub.dev/packages/lazy_memo
 
@@ -288,3 +293,5 @@ Please file feature requests and bugs at the [issue tracker].
 [null-safety]: https://dart.dev/null-safety
 
 [ObjectFactory]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/ObjectFactory.html
+
+[utils]: https://github.com/simphotonics/lazy_memo/tree/main/lib/src/utils.dart

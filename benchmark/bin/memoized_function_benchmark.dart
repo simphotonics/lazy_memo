@@ -2,7 +2,7 @@ import 'package:benchmark_harness/benchmark_harness.dart';
 import 'package:lazy_memo/lazy_memo.dart';
 
 late BigInt a;
-final BigInt arg = BigInt.from(50);
+final BigInt arg = 50.big;
 
 // Create a new benchmark by extending BenchmarkBase
 class FactorialMemoBenchmark extends BenchmarkBase {

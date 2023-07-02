@@ -43,7 +43,7 @@ void main() {
 
   print('------------- Factorial --------------');
   print('Calculates and stores the result');
-  print('factorial(12) = ${factorial(12)}\n');
+  print('factorial(12) = ${factorial(49)}\n');
 
   // The current function table
   print('Function table:');

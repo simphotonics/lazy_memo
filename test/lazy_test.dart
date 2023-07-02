@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:lazy_memo/lazy_memo.dart';
 import 'package:test/test.dart';
 
@@ -74,11 +76,8 @@ void main() {
     test('cached list', () {
       expect(lazyList(), [1, 2, 3]);
     });
-    test('modifying list', () {
-      final list = lazyList();
-      list.add(4);
-      expect(lazyList(), [1, 2, 3]);
-      expect(list, [1, 2, 3, 4]);
+    test('unmodifiable list', () {
+      expect(lazyList(), isA<UnmodifiableListView>());
     });
   });
 
@@ -87,11 +86,8 @@ void main() {
     test('cached set', () {
       expect(lazySet(), {1, 2, 3});
     });
-    test('modifying set', () {
-      final mySet = lazySet();
-      mySet.add(4);
-      expect(lazySet(), {1, 2, 3});
-      expect(mySet, {1, 2, 3, 4});
+    test('unmodifiable set', () {
+      expect(lazySet(), isA<UnmodifiableSetView>());
     });
   });
 
@@ -102,11 +98,8 @@ void main() {
     test('cached map', () {
       expect(lazyMap(), {'one': 1, 'two': 2, 'three': 3});
     });
-    test('modifying map', () {
-      final map = lazyMap();
-      map['four'] = 4;
-      expect(lazyMap(), {'one': 1, 'two': 2, 'three': 3});
-      expect(map, {'one': 1, 'two': 2, 'three': 3, 'four': 4});
+    test('unmodifiable map', () {
+      expect(lazyMap(), isA<UnmodifiableMapView>());
     });
   });
 }

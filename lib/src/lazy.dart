@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 /// Callback used to lazily create an object of type `T`.
 typedef ObjectFactory<T> = T Function();
 
@@ -47,7 +49,7 @@ class Lazy<T> {
 /// A lazy variable that caches a list with entries of type `T`.
 ///
 /// Note: The only difference between `Lazy<List<T>>` and `LazyList<T>` is
-/// that the latter returns a *copy* of the cached list to prevent
+/// that the latter returns an unmodifiable view of the cached list to prevent
 /// users from modifying the cache.
 class LazyList<T> extends Lazy<List<T>> {
   /// Constructs an object of type `LazyList<T>`.
@@ -63,16 +65,16 @@ class LazyList<T> extends Lazy<List<T>> {
   }) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = objectFactory();
+      _cache = UnmodifiableListView(objectFactory());
     }
-    return List<T>.of(_cache);
+    return _cache;
   }
 }
 
 /// A lazy variable that caches a set with entries of type `T`.
 ///
 /// Note: The only difference between `Lazy<Set<T>>` and `LazySet<T>` is
-/// that the latter returns a *copy* of the cached set to prevent
+/// that the latter returns an unmodifiable view of the cached set to prevent
 /// users from modifying the cache.
 class LazySet<T> extends Lazy<Set<T>> {
   /// Constructs an object of type `LazyList<T>`.
@@ -88,16 +90,16 @@ class LazySet<T> extends Lazy<Set<T>> {
   }) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = objectFactory();
+      _cache = UnmodifiableSetView(objectFactory());
     }
-    return Set<T>.of(_cache);
+    return _cache;
   }
 }
 
 /// A lazy variable that caches a map of type `Map<K, V>`.
 ///
 /// Note: The only difference between `Lazy<Map<K, V>>` and `LazyMap<K, V>` is
-/// that the latter returns a *copy* of the cached map to prevent
+/// that the latter returns an unmodifiable view of the cached map to prevent
 /// users from modifying the cache.
 class LazyMap<K, V> extends Lazy<Map<K, V>> {
   /// Constructs an object of type `LazyList<T>`.
@@ -113,8 +115,8 @@ class LazyMap<K, V> extends Lazy<Map<K, V>> {
   }) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = objectFactory();
+      _cache = UnmodifiableMapView(objectFactory());
     }
-    return Map<K, V>.of(_cache);
+    return _cache;
   }
 }

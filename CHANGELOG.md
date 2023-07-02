@@ -1,8 +1,12 @@
 ## 0.1.9
-- Added benchmark. Set min. SDK version to 3.0.0.
+
+- Added utility methods: `factorial` and `combinations`.
+- Added benchmarks.
+
 
 ## 0.1.8
 
+- Added benchmark. Set min. SDK version to 3.0.0.
 - Updated example and docs (memoized functions).
 
 ## 0.1.7

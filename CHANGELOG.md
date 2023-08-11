@@ -1,3 +1,7 @@
+# 0.2.1
+- Fixed `LazyList`, `LazySet`, and `LazyMap`. The call method now returns
+the same object until an update of the cache is requested.
+
 ## 0.2.0
 - Amended doc section lazy collections.
 

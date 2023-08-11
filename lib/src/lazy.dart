@@ -48,12 +48,13 @@ class Lazy<T> {
 
 /// A lazy variable that caches a list with entries of type `T`.
 ///
-/// Note: The only difference between `Lazy<List<T>>` and `LazyList<T>` is
-/// that the latter returns an unmodifiable view of the cached list to prevent
-/// users from modifying the cache.
+/// * An unmodifiable list view is returned to prevent modification of the cache.
+/// * The same object is returned until an update of the cache is requested by
+/// calling the method `updateCache()` or using the optional parameter
+/// `updateCache: true` to access the cached variable.
 class LazyList<T> extends Lazy<List<T>> {
   /// Constructs an object of type `LazyList<T>`.
-  LazyList(ObjectFactory<List<T>> objectFactory) : super(objectFactory);
+  LazyList(super.objectFactory);
 
   /// Returns the cached object.
   /// * The object is initialized when first accessed.
@@ -65,20 +66,29 @@ class LazyList<T> extends Lazy<List<T>> {
   }) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = UnmodifiableListView(objectFactory());
+      _cache = objectFactory();
+      _cacheView = UnmodifiableListView(_cache);
     }
-    return _cache;
+    return _cacheView;
+  }
+
+  late UnmodifiableListView<T> _cacheView;
+
+  @override
+  String toString() {
+    return 'LazyList<$T>: ${call()}';
   }
 }
 
 /// A lazy variable that caches a set with entries of type `T`.
 ///
-/// Note: The only difference between `Lazy<Set<T>>` and `LazySet<T>` is
-/// that the latter returns an unmodifiable view of the cached set to prevent
-/// users from modifying the cache.
+/// * An unmodifiable set view is returned to prevent modification of the cache.
+/// * The same object is returned until an update of the cache is requested by
+/// calling the method `updateCache()` or using the optional parameter
+/// `updateCache: true` to access the cached variable.
 class LazySet<T> extends Lazy<Set<T>> {
-  /// Constructs an object of type `LazyList<T>`.
-  LazySet(ObjectFactory<Set<T>> objectFactory) : super(objectFactory);
+  /// Constructs an object of type `LazySet<T>`.
+  LazySet(super.objectFactory);
 
   /// Returns the cached object.
   /// * The object is initialized when first accessed.
@@ -90,20 +100,29 @@ class LazySet<T> extends Lazy<Set<T>> {
   }) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = UnmodifiableSetView(objectFactory());
+      _cache = objectFactory();
+      _cacheView = UnmodifiableSetView(_cache);
     }
-    return _cache;
+    return _cacheView;
+  }
+
+  late UnmodifiableSetView<T> _cacheView;
+
+  @override
+  String toString() {
+    return 'LazySet<$T>: ${call()}';
   }
 }
 
 /// A lazy variable that caches a map of type `Map<K, V>`.
 ///
-/// Note: The only difference between `Lazy<Map<K, V>>` and `LazyMap<K, V>` is
-/// that the latter returns an unmodifiable view of the cached map to prevent
-/// users from modifying the cache.
+/// * An unmodifiable map view is returned to prevent modification of the cache.
+/// * The same object is returned until an update of the cache is requested by
+/// calling the method `updateCache()` or using the optional parameter
+/// `updateCache: true` to access the cached variable.
 class LazyMap<K, V> extends Lazy<Map<K, V>> {
-  /// Constructs an object of type `LazyList<T>`.
-  LazyMap(ObjectFactory<Map<K, V>> objectFactory) : super(objectFactory);
+  /// Constructs an object of type `LazyMap<T>`.
+  LazyMap(super.objectFactory);
 
   /// Returns the cached object.
   /// * The object is initialized when first accessed.
@@ -115,8 +134,16 @@ class LazyMap<K, V> extends Lazy<Map<K, V>> {
   }) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = UnmodifiableMapView(objectFactory());
+      _cache = objectFactory();
+      _cacheView = UnmodifiableMapView(_cache);
     }
-    return _cache;
+    return _cacheView;
+  }
+
+  late UnmodifiableMapView<K, V> _cacheView;
+
+  @override
+  String toString() {
+    return 'LazyMap<K, V>: ${call()}';
   }
 }

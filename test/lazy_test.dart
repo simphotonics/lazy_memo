@@ -79,6 +79,9 @@ void main() {
     test('unmodifiable list', () {
       expect(lazyList(), isA<UnmodifiableListView>());
     });
+    test('returns same object', () {
+      expect(lazyList() == lazyList(), true);
+    });
   });
 
   group('LazySet<int>:', () {
@@ -88,6 +91,9 @@ void main() {
     });
     test('unmodifiable set', () {
       expect(lazySet(), isA<UnmodifiableSetView>());
+    });
+    test('returns same object', () {
+      expect(lazySet() == lazySet(), true);
     });
   });
 
@@ -100,6 +106,12 @@ void main() {
     });
     test('unmodifiable map', () {
       expect(lazyMap(), isA<UnmodifiableMapView>());
+    });
+    test('returns same object', () {
+      expect(lazyMap() == lazyMap(), true);
+    });
+    test('returns new object after update', () {
+      expect(lazyMap() == lazyMap(updateCache: true), false);
     });
   });
 }

@@ -134,12 +134,6 @@ list.add(4); // lazyList() now returns: [1, 2, 3, 4]
 In order to prevent users from (inadvertently) modifying the cached object one
 may use the classes `LazyList<T>`, `LazySet<T>`, and `LazyMap<K, V>`. These
 classes return an unmodifiable view of the cached collection.
-```Dart
-final lazyList = LazyList<int>(() => [1, 2, 3]);
-final list = lazyList();
-list.add(4);
-print(lazyList()); // Prints: [1, 2, 3].
-```
 ------
 
 ### 4. Memoized Functions

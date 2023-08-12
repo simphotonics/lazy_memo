@@ -1,3 +1,6 @@
+# 0.2.2
+- Removed variable `_cacheView`. Amended `lazy_benchmark.dart`.
+
 # 0.2.1
 - Fixed `LazyList`, `LazySet`, and `LazyMap`. The call method now returns
 the same object until an update of the cache is requested.

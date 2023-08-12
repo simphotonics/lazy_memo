@@ -56,23 +56,16 @@ class LazyList<T> extends Lazy<List<T>> {
   /// Constructs an object of type `LazyList<T>`.
   LazyList(super.objectFactory);
 
-  /// Returns the cached object.
-  /// * The object is initialized when first accessed.
-  /// * To re-initialize the cached object use the
-  ///   optional parameter `updateCache`.
   @override
   List<T> call({
     bool updateCache = false,
   }) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = objectFactory();
-      _cacheView = UnmodifiableListView(_cache);
+      _cache = UnmodifiableListView(objectFactory());
     }
-    return _cacheView;
+    return _cache;
   }
-
-  late UnmodifiableListView<T> _cacheView;
 
   @override
   String toString() {
@@ -90,23 +83,16 @@ class LazySet<T> extends Lazy<Set<T>> {
   /// Constructs an object of type `LazySet<T>`.
   LazySet(super.objectFactory);
 
-  /// Returns the cached object.
-  /// * The object is initialized when first accessed.
-  /// * To re-initialize the cached object use the
-  ///   optional parameter `updateCache`.
   @override
   Set<T> call({
     bool updateCache = false,
   }) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = objectFactory();
-      _cacheView = UnmodifiableSetView(_cache);
+      _cache = UnmodifiableSetView(objectFactory());
     }
-    return _cacheView;
+    return _cache;
   }
-
-  late UnmodifiableSetView<T> _cacheView;
 
   @override
   String toString() {
@@ -124,26 +110,19 @@ class LazyMap<K, V> extends Lazy<Map<K, V>> {
   /// Constructs an object of type `LazyMap<T>`.
   LazyMap(super.objectFactory);
 
-  /// Returns the cached object.
-  /// * The object is initialized when first accessed.
-  /// * To re-initialize the cached object use the
-  ///   optional parameter `updateCache`.
   @override
   Map<K, V> call({
     bool updateCache = false,
   }) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = objectFactory();
-      _cacheView = UnmodifiableMapView(_cache);
+      _cache = UnmodifiableMapView(objectFactory());
     }
-    return _cacheView;
+    return _cache;
   }
-
-  late UnmodifiableMapView<K, V> _cacheView;
 
   @override
   String toString() {
-    return 'LazyMap<K, V>: ${call()}';
+    return 'LazyMap<$K, $V>: ${call()}';
   }
 }

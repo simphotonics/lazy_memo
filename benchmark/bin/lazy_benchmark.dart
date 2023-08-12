@@ -3,13 +3,23 @@ import 'dart:math';
 import 'package:benchmark_harness/benchmark_harness.dart';
 import 'package:lazy_memo/lazy_memo.dart';
 
-final lazy = Lazy<double>(() => sqrt(27));
-double testFunc() => sqrt(27);
-late double a;
+final lazy = LazyMap<int, double>(() => <int, double>{
+      27: sqrt(27),
+      29: sqrt(29),
+    });
+Map<int, double> testFunc() => <int, double>{
+      27: sqrt(27),
+      29: sqrt(29),
+    };
+
+late Map<int, double> map;
 
 // Create a new benchmark by extending BenchmarkBase
 class CallBenchmark extends BenchmarkBase {
-  const CallBenchmark() : super('Lazy<double>(() => sqrt(27))   ');
+  const CallBenchmark() : super('''LazyMap<int, double>(() => <int, double>{
+      27: sqrt(27),
+      29: sqrt(29),
+    }); \n''');
 
   static void main() {
     const CallBenchmark().report();
@@ -18,7 +28,7 @@ class CallBenchmark extends BenchmarkBase {
   // The benchmark code.
   @override
   void run() {
-    a = lazy();
+    map = lazy();
   }
 
   // Not measured setup code executed prior to the benchmark runs.
@@ -36,7 +46,10 @@ class CallBenchmark extends BenchmarkBase {
 
 // Create a new benchmark by extending BenchmarkBase
 class FunctionCallBenchmark extends BenchmarkBase {
-  const FunctionCallBenchmark() : super('double testFunc() => sqrt(27)  ');
+  const FunctionCallBenchmark() : super('''<int, double>{
+      27: sqrt(27),
+      29: sqrt(29),
+    }; \n''');
 
   static void main() {
     const FunctionCallBenchmark().report();
@@ -45,7 +58,7 @@ class FunctionCallBenchmark extends BenchmarkBase {
   // The benchmark code.
   @override
   void run() {
-    a = testFunc();
+    map = testFunc();
   }
 
   // Not measured setup code executed prior to the benchmark runs.
@@ -62,6 +75,8 @@ class FunctionCallBenchmark extends BenchmarkBase {
 }
 
 void main() {
+  print('Returning cached map:');
   CallBenchmark.main();
+  print('\nBuilding map object:');
   FunctionCallBenchmark.main();
 }

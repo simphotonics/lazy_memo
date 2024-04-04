@@ -1,5 +1,6 @@
 # 0.2.3
 - Updated dependencies.
+- Amended documentation.
 
 # 0.2.2
 - Removed variable `_cacheView`. Amended `lazy_benchmark.dart`.

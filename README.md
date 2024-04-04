@@ -11,7 +11,6 @@ input (e.g. the unsorted list) has not changed.
 The technique of storing the result of function calls
 was coined [memoization][memoization].
 
-
 A different strategy to minimize CPU usage is to delay the initialization of variables.
 [Lazy initialization][lazy_initialization] is particularly
 useful in event driven scenarios where there is no definite execution path and
@@ -30,10 +29,10 @@ in your pubspec.yaml file.
 
 ### 1. Lazy Variables
 
-Note: To define variables that are going to be initalized *once* use Dart's
+**Note**: To define variables that are going to be initalized *once* use Dart's
 `late` modifier.
 
-To define lazy variables that can be marked for re-initialization
+To define lazy variables that can be marked for *re-initialization*
 use the generic class [`Lazy<T>`][Lazy].
 It is often useful to declare *lazy* variables
 using Darts *late* modifier since it makes it possible to
@@ -133,7 +132,7 @@ list.add(4); // lazyList() now returns: [1, 2, 3, 4]
 ```
 In order to prevent users from (inadvertently) modifying the cached object one
 may use the classes `LazyList<T>`, `LazySet<T>`, and `LazyMap<K, V>`. These
-classes return an unmodifiable view of the cached collection.
+classes cache and return an *unmodifiable view* of the collection.
 
 ------
 

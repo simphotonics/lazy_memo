@@ -19,9 +19,7 @@ class Lazy<T> {
   /// * The object is initialized when first accessed.
   /// * To re-initialize the cached object use the
   ///   optional parameter `updateCache`.
-  T call({
-    bool updateCache = false,
-  }) {
+  T call({bool updateCache = false}) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
       return _cache = objectFactory();
@@ -57,9 +55,7 @@ class LazyList<T> extends Lazy<List<T>> {
   LazyList(super.objectFactory);
 
   @override
-  List<T> call({
-    bool updateCache = false,
-  }) {
+  List<T> call({bool updateCache = false}) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
       _cache = UnmodifiableListView(objectFactory());
@@ -84,9 +80,7 @@ class LazySet<T> extends Lazy<Set<T>> {
   LazySet(super.objectFactory);
 
   @override
-  Set<T> call({
-    bool updateCache = false,
-  }) {
+  Set<T> call({bool updateCache = false}) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
       _cache = UnmodifiableSetView(objectFactory());
@@ -111,9 +105,7 @@ class LazyMap<K, V> extends Lazy<Map<K, V>> {
   LazyMap(super.objectFactory);
 
   @override
-  Map<K, V> call({
-    bool updateCache = false,
-  }) {
+  Map<K, V> call({bool updateCache = false}) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
       _cache = UnmodifiableMapView(objectFactory());

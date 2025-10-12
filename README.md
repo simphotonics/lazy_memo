@@ -4,22 +4,23 @@
 
 ## Introduction
 
+The package [`lazy_memo`][lazy_memo] provides generic classes that can be used
+to define [lazy cached variables](#1-lazy-variables) and
+[memoized functions](#4-memoized-functions).
+
 Minimizing CPU and memory usage are two important goals of software optimization.
 If sufficient memory is available, costly operations (such as sorting a large list)
 can be avoided by storing the result and reusing it as long as the relevant
 input (e.g. the unsorted list) has not changed.
+
 The technique of storing the result of function calls
 was coined [memoization][memoization].
 
-A different strategy to minimize CPU usage is to delay the initialization of variables.
+A different strategy to minimize CPU usage is to delay the
+initialization of variables.
 [Lazy initialization][lazy_initialization] is particularly
 useful in event driven scenarios where there is no definite execution path and
 a certain variable might never be used.
-
-The package [`lazy_memo`][lazy_memo] provides generic classes that can be used
-to define [lazy variables](#1-lazy-variables) and
-[memoized functions](#4-memoized-functions).
-
 
 ## Usage
 
@@ -29,20 +30,11 @@ in your pubspec.yaml file.
 
 ### 1. Lazy Variables
 
-**Note**: To define variables that are going to be initalized *once* use Dart's
-`late` modifier.
+**Note**: To define variables that are going to be initalized *once*
+just use Dart's `late` modifier.
 
-To define lazy variables that can be marked for *re-initialization*
+To define *cached lazy* variables that can be marked for *re-initialization*
 use the generic class [`Lazy<T>`][Lazy].
-It is often useful to declare *lazy* variables
-using Darts *late* modifier since it makes it possible to
-initialize e.g. a final instance variable at the point of definition:
-```Dart
-class A{
-  late final _value = Lazy<double>(() => costlyCalculation());
-  double value get => _value();
-}
-```
 
 1. Lazy variables are declared using the constructor of
    the generic class [`Lazy<T>`][Lazy].
@@ -81,13 +73,13 @@ void main() {
     () => sample.reduce((sum, current) => sum += current),
   );
 
-  // Calculating sample mean
+  // Calculating the sample mean
   final sampleMean = Lazy<double>(
     () => sampleSum(updateCache: true) / sample.length,
   );
 
-  print('  Initial value of sampleSum: ${sampleSum()}');
-  print('  Initial value of sampleMean: ${sampleMean()}\n');
+  print('  Initial value of sampleMean: ${sampleMean()}');
+  print('  Initial value of sampleSum: ${sampleSum()}\n');
   print('Adding outliers to random sample: [1500.0, 1200.0]');
 
   // Adding outliers
@@ -99,7 +91,6 @@ void main() {
 }
 
 ```
-</details>
 
 <br>
 
@@ -107,32 +98,60 @@ void main() {
 
 It is possible to declare dependent lazy variables by using an
 expression containing one lazy variable to declare another lazy variable.
+```Dart
+// Calculating the sample mean
+  final sampleMean = Lazy<double>(
+    () => sampleSum(updateCache: true) / sample.length,
+  );
+```
 In the example above, `sampleMean` depends on `sampleSum` since the callback
 passed to the constructor of `sampleMean` references `sampleSum`.
 
 The optional parameter `updateCache` can be used strategically to trigger an
 update of cached variables along the
-dependency tree. In the example above, `sampleSum(updateCache: true)`
-is called every time `sampleMean` is updated.
-Therefore, an update of `sampleMean` triggers an update of `sampleSum`.
+dependency tree. Since `sampleSum(updateCache: true)`
+is called every time `sampleMean` is updated,
+an update of `sampleMean` triggers an update of `sampleSum`.
 
 Note: An update of a lazy variable can also be requested by calling the
-method: `updateCache()`.
+instance method: `updateCache()`.
+
+<details>  <summary> Click to show console output. </summary>
+
+ ```Console
+ $ dart example/bin/lazy_example.dart
+Running lazy_example.dart.
+
+Generating a random sample with size 5000 and mean: 4.0:
+  Initial value of sampleMean: 4.048803375544851
+  Initial value of sampleSum: 8097.606751089702
+
+Adding outliers to random sample: [1500.0, 1200.0]
+  Updated value of sampleMean: 5.393409965579271
+  Updated value of sampleSum: 10797.606751089701
+ ```
+
+</details>
 
 <br>
 
 ### 3. Lazy Collections
 
 Lazy variables can be used to cache objects of type `List`, `Set`, `Map`, etc.
-However, as the example below demonstrates, the cached object can be modified.
+However, as the example below demonstrates, the cached object *can* be modified.
 ```Dart
 final lazyList = Lazy<List<int>>(() => [1, 2, 3]);
 final list = lazyList();
 list.add(4); // lazyList() now returns: [1, 2, 3, 4]
 ```
 In order to prevent users from (inadvertently) modifying the cached object one
-may use the classes `LazyList<T>`, `LazySet<T>`, and `LazyMap<K, V>`. These
-classes cache and return an *unmodifiable view* of the collection.
+should instead use the classes `LazyList<T>`, `LazySet<T>`, and `LazyMap<K, V>`.
+These classes cache a collection and return an *unmodifiable view*
+of the collection.
+
+It is often useful to declare *lazy* variables
+using Darts *late* modifier since it makes it possible to
+initialize e.g. a final instance variables at the point of definition.
 
 ------
 

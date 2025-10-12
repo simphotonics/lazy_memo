@@ -3,14 +3,13 @@ name: lazy_memo
 description: Lazy variables that can be marked for re-initialization and
   memoized single and double argument functions.
 
-version: 0.2.3
+version: 0.2.4
 
 homepage: https://github.com/simphotonics/lazy_memo
 
 environment:
-  sdk: '^3.0.0'
+  sdk: '^3.9.0'
 
 dev_dependencies:
-  benchmark_harness: ^2.2.2
-  lints: ^3.0.0
-  test: ^1.25.2
+  lints: ^6.0.0
+  test: ^1.26.3

@@ -1,3 +1,7 @@
+# 0.2.4
+- Updated dependencies
+- Removed benchmarks.
+
 # 0.2.3
 - Updated dependencies.
 - Amended documentation.

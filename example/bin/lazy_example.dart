@@ -15,7 +15,9 @@ void main() {
   print('Generating a random sample with size 5000 and mean: 4.0:');
   // Generating a random sample
   final sample = List<double>.generate(
-      5000, (_) => -mean * log(1.0 - random.nextDouble()));
+    2000,
+    (_) => -mean * log(1.0 - random.nextDouble()),
+  );
 
   // Initializing lazy variables
   final sampleSum = Lazy<double>(
@@ -27,14 +29,16 @@ void main() {
     () => sampleSum(updateCache: true) / sample.length,
   );
 
-  print('  Initial value of sampleSum: ${sampleSum()}');
-  print('  Initial value of sampleMean: ${sampleMean()}\n');
+  print('  Initial value of sampleMean: ${sampleMean()}');
+  print('  Initial value of sampleSum: ${sampleSum()}\n');
   print('Adding outliers to random sample: [1500.0, 1200.0]');
 
   // Adding outliers
   sample.addAll([1500.0, 1200.0]);
 
-  print('  Updated value of sampleMean: '
-      '${sampleMean(updateCache: true)}');
+  print(
+    '  Updated value of sampleMean: '
+    '${sampleMean(updateCache: true)}',
+  );
   print('  Updated value of sampleSum: ${sampleSum()}');
 }

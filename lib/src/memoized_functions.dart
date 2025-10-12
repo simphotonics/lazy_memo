@@ -40,10 +40,7 @@ class MemoizedFunction<A, T> {
   /// * The cache is initialized when first accessed.
   /// * To re-initialize the cached function result use the
   ///   optional parameter `recalculate`.
-  T call(
-    A arg, {
-    bool recalculate = false,
-  }) {
+  T call(A arg, {bool recalculate = false}) {
     if (recalculate) {
       return _functionTable[arg] = func(arg);
     } else {
@@ -102,11 +99,7 @@ class MemoizedFunction2<A1, A2, T> {
   /// * The cache is initialized when first accessed.
   /// * To re-initialize the cached function result use the
   ///   optional parameter `recalculate`.
-  T call(
-    A1 arg1,
-    A2 arg2, {
-    bool recalculate = false,
-  }) {
+  T call(A1 arg1, A2 arg2, {bool recalculate = false}) {
     if (recalculate) {
       _functionTable[arg1] = {arg2: func(arg1, arg2)};
       return _functionTable[arg1]![arg2]!;

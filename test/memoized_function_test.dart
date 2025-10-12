@@ -43,9 +43,9 @@ void main() {
   });
 
   group('Memoized function returning \'Future\':', () {
-    final futureCube = MemoizedFunction<num, Future<num>>((x) => later<num>(
-          x * x * x,
-        ));
+    final futureCube = MemoizedFunction<num, Future<num>>(
+      (x) => later<num>(x * x * x),
+    );
 
     test('Value', () async {
       expect(await futureCube(7), 7 * 7 * 7);
@@ -72,20 +72,20 @@ void main() {
   group('Memoized function 2: ', () {
     final xy = MemoizedFunction2((num x, num y) => x * y);
     test('initial function table', () {
-      final xy = MemoizedFunction2((num x, num y) => x * y, functionTable: {
-        3: {6: 18}
-      });
-      expect(xy.functionTable, <num, Map<num, num>>{
-        3: {6: 18}
-      });
-      expect(xy(8, 9), 72);
-      expect(
-        xy.functionTable,
-        <num, Map<num, num>>{
+      final xy = MemoizedFunction2(
+        (num x, num y) => x * y,
+        functionTable: {
           3: {6: 18},
-          8: {9: 72}
         },
       );
+      expect(xy.functionTable, <num, Map<num, num>>{
+        3: {6: 18},
+      });
+      expect(xy(8, 9), 72);
+      expect(xy.functionTable, <num, Map<num, num>>{
+        3: {6: 18},
+        8: {9: 72},
+      });
     });
     test('value', () {
       xy.clearFunctionTable();

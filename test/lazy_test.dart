@@ -52,9 +52,7 @@ void main() {
   group('Async:', () {
     var input = 'Waiting for 200 milliseconds';
 
-    final lazyFutureString = Lazy<Future<String>>(
-      () => later<String>(input),
-    );
+    final lazyFutureString = Lazy<Future<String>>(() => later<String>(input));
 
     test('cached value', () async {
       input = 'Waiting for 200 milliseconds';

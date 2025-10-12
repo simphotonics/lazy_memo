@@ -31,10 +31,11 @@ BigInt _combinations(BigInt n, BigInt k) {
 
   if (n < k) {
     throw ArgumentError.value(
-        k,
-        'k',
-        'combinations($n, k) requires k <= $n. '
-            'Found k');
+      k,
+      'k',
+      'combinations($n, k) requires k <= $n. '
+          'Found k',
+    );
   }
 
   if (k > n ~/ BigInt.two) {

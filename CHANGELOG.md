@@ -1,6 +1,9 @@
+# 0.2.5
+- Updated README.md
+
 # 0.2.4
 - Updated dependencies
-- Removed benchmarks.
+- Removed benchmarks
 
 # 0.2.3
 - Updated dependencies.

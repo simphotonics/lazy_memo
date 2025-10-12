@@ -1,11 +1,16 @@
 name: lazy_memo
 
-description: Lazy variables that can be marked for re-initialization and
+description: Cached lazy variables that can be marked for re-initialization and
   memoized single and double argument functions.
 
-version: 0.2.4
+version: 0.2.5
 
 homepage: https://github.com/simphotonics/lazy_memo
+
+topics:
+  - lazy-variable
+  - cached-variable
+  - memoized-function
 
 environment:
   sdk: '^3.9.0'

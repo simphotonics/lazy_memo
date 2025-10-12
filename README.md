@@ -30,12 +30,11 @@ in your pubspec.yaml file.
 
 ### 1. Lazy Variables
 
-**Note**: To define variables that are going to be initalized **once**
+**Note**: To define variables that are going to be initalized *once*
 simply use Dart's `late` modifier.
 
----
 
-To define **cached lazy** variables that can be marked for *re-initialization*
+To define *cached lazy* variables that can be marked for *re-initialization*
 use the generic class [`Lazy<T>`][Lazy].
 I often find it useful to declare *lazy* variables
 using the *late* modifier since it makes it possible to
@@ -45,6 +44,11 @@ initialize a final instance variable at the point of definition.
    the generic class [`Lazy<T>`][Lazy].
 2. The constructor requires a callback, [`ObjectFactory`][ObjectFactory],
    that returns an  object of type `T`.
+   To prevent (inadvertent) modification of the cached variable it is advisable
+   to have [`ObjectFactory`][ObjectFactory] return an immutable object.
+   For more info see the section [Lazy Collections](lazy-collections) below.
+
+
 3. To access the cached object, the lazy variable is called like a function
    (see example below).
 4. The optional parameter `updateCache` can be used to request an
@@ -154,7 +158,6 @@ should instead use the classes `LazyList<T>`, `LazySet<T>`, and `LazyMap<K, V>`.
 These classes cache a collection and return an *unmodifiable view*
 of the collection.
 
-------
 
 ### 4. Memoized Functions
 

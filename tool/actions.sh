@@ -53,7 +53,3 @@ echo -e "${BLUE}=== Running Examples $PWD/example ${RESET}"
 echo
 dart example/bin/lazy_example.dart
 
-echo
-echo -e "${GREEN}=== Running Benchmarks $PWD/benchmark ${RESET}"
-echo
-dart benchmark/bin/lazy_benchmark.dart

@@ -38,7 +38,7 @@ To define *cached lazy* variables that can be marked for *re-initialization*
 use the generic class [`Lazy<T>`][Lazy].
 I often find it useful to declare *lazy* variables
 using the *late* modifier since it makes it possible to
-initialize a final instance variable at the point of definition.
+initialize `final` instance variables at the point of definition.
 
 1. Lazy variables are declared using the constructor of
    the generic class [`Lazy<T>`][Lazy].
@@ -46,7 +46,7 @@ initialize a final instance variable at the point of definition.
    that returns an  object of type `T`.
    To prevent (inadvertent) modification of the cached variable it is advisable
    to have [`ObjectFactory`][ObjectFactory] return an immutable object.
-   For more info see the section [Lazy Collections](lazy-collections) below.
+   For more info see the section [Lazy Collections](#3-lazy-collections) below.
 
 
 3. To access the cached object, the lazy variable is called like a function

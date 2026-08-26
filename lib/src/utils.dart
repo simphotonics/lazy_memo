@@ -12,7 +12,7 @@ BigInt _factorial(BigInt x) {
 
 /// Returns the factorial of a positive integer. Throws and error of type
 /// [ArgumentError] if a negative argument is provided.
-final factorial = MemoizedFunction(_factorial);
+final factorial = MemoizedSingleArgumentFunction(_factorial);
 
 extension ToBigInt on int {
   /// Converts this to [BigInt].
@@ -60,4 +60,4 @@ BigInt _combinations(BigInt n, BigInt k) {
 /// * combinations(n, 0) = 1
 /// Throws an error of type [ArgumentError] if a negative argument is provided
 /// or if n < k.
-final combinations = MemoizedFunction2(_combinations);
+final combinations = MemoizedDoubleArgumentFunction(_combinations);

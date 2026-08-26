@@ -1,3 +1,11 @@
+# 1.0.0
+- Added `GenericMemoizedFunction`, a memoized generic function without
+  arguments.
+- Modified `LazyList`, `LazySet`, and `LazyMap`. The cached object is now an
+  unmodifiable copy of the collection created by the user
+  provided object factory.
+- Requires Dart 3.13.0.
+
 # 0.2.5
 - Updated README.md
 

@@ -126,18 +126,11 @@ void main() {
     test('initial function table', () {
       final xy = MemoizedDoubleArgumentFunction(
         (num x, num y) => x * y,
-        functionTable: {
-          3: {6: 18},
-        },
+        functionTable: {(3, 6): 18},
       );
-      expect(xy.functionTable, <num, Map<num, num>>{
-        3: {6: 18},
-      });
+      expect(xy.functionTable, <(num, num), num>{(3, 6): 18});
       expect(xy(8, 9), 72);
-      expect(xy.functionTable, <num, Map<num, num>>{
-        3: {6: 18},
-        8: {9: 72},
-      });
+      expect(xy.functionTable, <(num, num), num>{(3, 6): 18, (8, 9): 72});
     });
     test('value', () {
       xy.clearFunctionTable();
@@ -145,7 +138,7 @@ void main() {
     });
     test('clearing function table', () {
       xy.clearFunctionTable();
-      expect(xy.functionTable, <num, Map<num, num>>{});
+      expect(xy.functionTable, <(num, num), num>{});
     });
   });
 }

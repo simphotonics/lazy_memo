@@ -1,4 +1,3 @@
-
 /// Callback used to lazily create an object of type [T].
 typedef ObjectFactory<T> = T Function();
 

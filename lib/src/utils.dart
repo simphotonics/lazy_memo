@@ -1,4 +1,4 @@
-import 'memoized_functions.dart';
+import 'memoized_function.dart';
 
 BigInt _factorial(BigInt x) {
   if (x == BigInt.zero || x == BigInt.one) {

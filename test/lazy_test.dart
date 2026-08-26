@@ -75,7 +75,10 @@ void main() {
       expect(lazyList(), [1, 2, 3]);
     });
     test('unmodifiable list', () {
-      expect(lazyList(), isA<UnmodifiableListView>());
+      expect(lazyList(), isA<List<int>>());
+      expect(() {
+        lazyList().removeLast();
+      }, throwsA(isA<UnsupportedError>()));
     });
     test('returns same object', () {
       expect(lazyList() == lazyList(), true);
@@ -88,7 +91,10 @@ void main() {
       expect(lazySet(), {1, 2, 3});
     });
     test('unmodifiable set', () {
-      expect(lazySet(), isA<UnmodifiableSetView>());
+      expect(lazySet(), isA<Set<int>>());
+      expect(() {
+        lazySet().remove(1);
+      }, throwsA(isA<UnsupportedError>()));
     });
     test('returns same object', () {
       expect(lazySet() == lazySet(), true);
@@ -103,8 +109,12 @@ void main() {
       expect(lazyMap(), {'one': 1, 'two': 2, 'three': 3});
     });
     test('unmodifiable map', () {
-      expect(lazyMap(), isA<UnmodifiableMapView>());
+      expect(lazyMap(), isA<Map<String, int>>());
+      expect(() {
+        lazyMap().remove('one');
+      }, throwsA(isA<UnsupportedError>()));
     });
+
     test('returns same object', () {
       expect(lazyMap() == lazyMap(), true);
     });

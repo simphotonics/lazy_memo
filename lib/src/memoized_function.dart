@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 /// A generic function with type argument [T] and
 /// and return type [R].
 typedef GenericFunction<R> = R Function<T>();
@@ -44,7 +46,11 @@ class GenericMemoizedFunction<R> {
     if (recalculate) {
       return _functionTable[T] = func<T>();
     } else {
-      return _functionTable[T] ??= func<T>();
+      if (_functionTable.containsKey(T)) {
+        return _functionTable[T]!;
+      } else {
+        return _functionTable[T] = func<T>();
+      }
     }
   }
 
@@ -62,8 +68,9 @@ class GenericMemoizedFunction<R> {
     }
   }
 
-  /// Returns a copy of the current function table.
-  Map<Type, R> get functionTable => Map<Type, R>.of(_functionTable);
+  /// Returns an [UnmodifiableMapView] of the current function table.
+  UnmodifiableMapView<Type, R> get functionTable =>
+      UnmodifiableMapView(_functionTable);
 }
 
 /// Class representing a memoized function
@@ -74,11 +81,8 @@ class MemoizedSingleArgumentFunction<R, A> {
   /// * [functionTable]: May be used to
   ///   initialize the function lookup table with
   ///   {function argument: function value pairs}.
-  new(this.func, {Map<A, R> functionTable = const {}}) {
-    if (functionTable.isNotEmpty) {
-      _functionTable.addAll(functionTable);
-    }
-  }
+  new(this.func, {Map<A, R> functionTable = const {}})
+    : _functionTable = Map.of(functionTable);
 
   /// Returns the function argument type [A].
   Type get argumentType => A;
@@ -93,9 +97,10 @@ class MemoizedSingleArgumentFunction<R, A> {
   final SingleArgumentFunction<R, A> func;
 
   /// Function table.
-  final _functionTable = <A, R>{};
+  final Map<A, R> _functionTable;
 
-  /// Returns the result of calling `func` or a cached result if available.
+  /// Returns the result of calling `func` or a cached result if it
+  /// is  available.
   /// * The cache is initialized when first accessed.
   /// * To re-initialize the cached function result use the
   ///   optional parameter `recalculate`.
@@ -103,7 +108,11 @@ class MemoizedSingleArgumentFunction<R, A> {
     if (recalculate) {
       return _functionTable[arg] = func(arg);
     } else {
-      return _functionTable[arg] ??= func(arg);
+      if (_functionTable.containsKey(arg)) {
+        return _functionTable[arg]!;
+      } else {
+        return _functionTable[arg] = func(arg);
+      }
     }
   }
 
@@ -121,9 +130,12 @@ class MemoizedSingleArgumentFunction<R, A> {
     }
   }
 
-  /// Returns a copy of the current function table.
-  Map<A, R> get functionTable => Map<A, R>.of(_functionTable);
+  /// Returns an [UnmodifiableMapView] of the current function table.
+  UnmodifiableMapView<A, R> get functionTable =>
+      UnmodifiableMapView(_functionTable);
 }
+
+typedef ArgumentPair<A1, A2> = (A1, A2);
 
 /// Class representing a memoized function requiring arguments of type
 /// [A1] and [A2], respectively, and returning an object of type [R].
@@ -133,17 +145,14 @@ class MemoizedDoubleArgumentFunction<R, A1, A2> {
   /// initialize the function lookup table with certain
   /// {function argument1: {function argument 2: function value pairs} }
   /// entries.
-  new(this.func, {Map<A1, Map<A2, R>> functionTable = const {}}) {
-    if (functionTable.isNotEmpty) {
-      _functionTable.addAll(functionTable);
-    }
-  }
+  new(this.func, {Map<ArgumentPair<A1, A2>, R> functionTable = const {}})
+    : _functionTable = {...functionTable};
 
   /// The memoized function.
   final DoubleArgumentFunction<R, A1, A2> func;
 
   /// Function table
-  final _functionTable = <A1, Map<A2, R>>{};
+  final Map<ArgumentPair<A1, A2>, R> _functionTable;
 
   /// Returns the function argument types `[A1, A2]`.
   List<Type> get argumentTypes => [A1, A2];
@@ -151,7 +160,7 @@ class MemoizedDoubleArgumentFunction<R, A1, A2> {
   /// Returns the function return type [R].
   Type get returnType => R;
 
-  /// Returns the typedef of the memoized function.
+  /// Returns the signature of the memoized function.
   Type get signature => DoubleArgumentFunction<A1, A2, R>;
 
   /// Returns the result of calling `func` or a cached result if available.
@@ -160,21 +169,19 @@ class MemoizedDoubleArgumentFunction<R, A1, A2> {
   ///   optional parameter `recalculate`.
   R call(A1 arg1, A2 arg2, {bool recalculate = false}) {
     if (recalculate) {
-      _functionTable[arg1] = {arg2: func(arg1, arg2)};
-      return _functionTable[arg1]![arg2]!;
+      return _functionTable[(arg1, arg2)] = func(arg1, arg2);
     } else {
-      if (_functionTable.containsKey(arg1)) {
-        return _functionTable[arg1]![arg2] ??= func(arg1, arg2);
+      if (_functionTable.containsKey((arg1, arg2))) {
+        return _functionTable[(arg1, arg2)]!;
       } else {
-        _functionTable[arg1] = {arg2: func(arg1, arg2)};
-        return _functionTable[arg1]![arg2]!;
+        return _functionTable[(arg1, arg2)] = func(arg1, arg2);
       }
     }
   }
 
-  /// Returns a copy of the current function table.
-  Map<A1, Map<A2, R>> get functionTable =>
-      Map<A1, Map<A2, R>>.of(_functionTable);
+  /// Returns an [UnmodifiableMapView] of the current function table.
+  UnmodifiableMapView<(A1, A2), R> get functionTable =>
+      UnmodifiableMapView(_functionTable);
 
   /// Clears the cached function table.
   void clearFunctionTable() {

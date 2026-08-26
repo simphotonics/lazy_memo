@@ -5,11 +5,63 @@ Future<T> later<T>(T t) async {
   return await Future.delayed(Duration(milliseconds: 200), () => t);
 }
 
+bool _isComparable<T>() => Iterable<T>.empty() is Iterable<Comparable>;
+
 void main() {
-  group('Memoized function: ', () {
-    final square = MemoizedFunction<num, num>((x) => x * x);
+  group('Generic memoized function: ', () {
     test('initial function table', () {
-      final quad = MemoizedFunction(
+      final isComparable = GenericMemoizedFunction(
+        _isComparable,
+        functionTable: {int: true},
+      );
+
+      expect(isComparable.functionTable, {int: true});
+      expect(isComparable<double>(), true);
+      expect(
+        isComparable.functionTable,
+        isA<Map<Type, bool>>().having(
+          (map) => map.containsKey(double),
+          'key',
+          true,
+        ),
+      );
+    });
+    test('value', () {
+      final isComparable = GenericMemoizedFunction(
+        _isComparable,
+        functionTable: {int: true},
+      );
+
+      expect(isComparable<List>(), false);
+      expect(isComparable.functionTable, {int: true, List: false});
+    });
+    test('clearing function table', () {
+      final isComparable = GenericMemoizedFunction(
+        _isComparable,
+        functionTable: {int: true},
+      );
+
+      isComparable<String>();
+      isComparable.clearFunctionTable();
+      expect(isComparable.functionTable, <Type, bool>{});
+    });
+    test('selectively clearing function table', () {
+      final isComparable = GenericMemoizedFunction(
+        _isComparable,
+        functionTable: {int: true, bool: false},
+      );
+      isComparable.clearFunctionTable(args: [bool]);
+      expect(isComparable.functionTable, {int: true});
+    });
+    test('signature', () {
+      final isComparable = GenericMemoizedFunction(_isComparable);
+      expect(isComparable.signature, GenericFunction<bool>);
+    });
+  });
+  group('Memoized function: ', () {
+    final square = MemoizedSingleArgumentFunction<num, num>((x) => x * x);
+    test('initial function table', () {
+      final quad = MemoizedSingleArgumentFunction(
         (num x) => x * x * x * x,
         functionTable: {4: 256, 5: 625},
       );
@@ -43,7 +95,7 @@ void main() {
   });
 
   group('Memoized function returning \'Future\':', () {
-    final futureCube = MemoizedFunction<num, Future<num>>(
+    final futureCube = MemoizedSingleArgumentFunction<Future<num>, num>(
       (x) => later<num>(x * x * x),
     );
 
@@ -70,9 +122,9 @@ void main() {
   });
 
   group('Memoized function 2: ', () {
-    final xy = MemoizedFunction2((num x, num y) => x * y);
+    final xy = MemoizedDoubleArgumentFunction((num x, num y) => x * y);
     test('initial function table', () {
-      final xy = MemoizedFunction2(
+      final xy = MemoizedDoubleArgumentFunction(
         (num x, num y) => x * y,
         functionTable: {
           3: {6: 18},

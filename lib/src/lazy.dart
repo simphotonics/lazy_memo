@@ -1,13 +1,12 @@
-import 'dart:collection';
 
-/// Callback used to lazily create an object of type `T`.
+/// Callback used to lazily create an object of type [T].
 typedef ObjectFactory<T> = T Function();
 
-/// A class that caches an object of type `T`.
+/// A class that caches an object of type [T].
 /// The cache is populated when the object is first accessed.
 class Lazy<T> {
   /// Constructs a lazy object.
-  Lazy(this.objectFactory);
+  new(this.objectFactory);
 
   /// Callback used to create the cached object.
   final ObjectFactory<T> objectFactory;
@@ -44,21 +43,21 @@ class Lazy<T> {
   }
 }
 
-/// A lazy variable that caches a list with entries of type `T`.
+/// A lazy variable that caches a list with entries of type [T].
 ///
 /// * An unmodifiable list view is returned to prevent modification of the cache.
 /// * The same object is returned until an update of the cache is requested by
 /// calling the method `updateCache()` or using the optional parameter
 /// `updateCache: true` to access the cached variable.
 class LazyList<T> extends Lazy<List<T>> {
-  /// Constructs an object of type `LazyList<T>`.
-  LazyList(super.objectFactory);
+  /// Constructs an object of type [LazyList] with type argument [T].
+  new(super.objectFactory);
 
   @override
   List<T> call({bool updateCache = false}) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = UnmodifiableListView(objectFactory());
+      _cache = List.unmodifiableOf(objectFactory());
     }
     return _cache;
   }
@@ -69,21 +68,21 @@ class LazyList<T> extends Lazy<List<T>> {
   }
 }
 
-/// A lazy variable that caches a set with entries of type `T`.
+/// A lazy variable that caches a set with entries of type [T].
 ///
 /// * An unmodifiable set view is returned to prevent modification of the cache.
 /// * The same object is returned until an update of the cache is requested by
-/// calling the method `updateCache()` or using the optional parameter
-/// `updateCache: true` to access the cached variable.
+/// calling the method [updateCache] or using the optional parameter
+/// [updateCache] : true to access the cached variable.
 class LazySet<T> extends Lazy<Set<T>> {
-  /// Constructs an object of type `LazySet<T>`.
-  LazySet(super.objectFactory);
+  /// Constructs an object of type [LazySet] with type argument [T].
+  new(super.objectFactory);
 
   @override
   Set<T> call({bool updateCache = false}) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = UnmodifiableSetView(objectFactory());
+      _cache = Set.unmodifiable(objectFactory());
     }
     return _cache;
   }
@@ -101,14 +100,14 @@ class LazySet<T> extends Lazy<Set<T>> {
 /// calling the method `updateCache()` or using the optional parameter
 /// `updateCache: true` to access the cached variable.
 class LazyMap<K, V> extends Lazy<Map<K, V>> {
-  /// Constructs an object of type `LazyMap<T>`.
-  LazyMap(super.objectFactory);
+  /// Constructs an object of type [LazyMap].
+  new(super.objectFactory);
 
   @override
   Map<K, V> call({bool updateCache = false}) {
     if (updateCache || !_isUpToDate) {
       _isUpToDate = true;
-      _cache = UnmodifiableMapView(objectFactory());
+      _cache = Map.unmodifiableOf(objectFactory());
     }
     return _cache;
   }

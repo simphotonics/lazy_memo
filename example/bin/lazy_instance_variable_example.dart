@@ -19,7 +19,7 @@ void main(List<String> args) {
   // Access value:
   print(a.value);
   print(a.value);
-  
+
   a.update();
   print(a.value);
 }

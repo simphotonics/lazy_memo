@@ -158,7 +158,7 @@ final lazyList = Lazy<List<int>>(() => [1, 2, 3]);
 final list = lazyList();
 list.add(4); // lazyList() now returns: [1, 2, 3, 4]
 ```
-To prevent (inadvertent) modification of the cached collection the object
+To prevent (inadvertent) modification of the cached collection, the object
 factory should return an unmodifiable collection:
 ```Dart
 final lazyList = Lazy<List<int>>(() => List.unmodifiableOf([1,2,3]));
@@ -166,14 +166,16 @@ final lazyList = Lazy<List<int>>(() => List.unmodifiableOf([1,2,3]));
 
 Alternatively, one could use the classes `LazyList<T>`, `LazySet<T>`,
 and `LazyMap<K, V>`.
-These classes cache an unmodifiable copy of the collection.
+These classes cache an unmodifiable copy of the collection returned by the
+object factory.
 
 ### 4. Memoized Functions
 
 Memoized functions maintain a lookup table of previously calculated results.
 When called,
-a memoized function checks if it was called previously with the same set of arguments.
-If that is the case it will return a cached result.
+a memoized function checks if it was called previously with the
+same set of arguments.
+If that is the case, it will return a cached result.
 
 Memoizing a function comes at the cost of additional indirections,
 higher memory usage, and the complexity of having to maintain a function table.

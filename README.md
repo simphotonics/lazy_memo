@@ -57,9 +57,8 @@ use the generic class [`Lazy<T>`][Lazy].
    a();
    ```
    When first accessed, the cached
-   value is initialized with result of the object factory.
-   When accessed repeatedly the same cached value is returned.
-
+   value is initialized with the value returned by the object factory.
+   When accessed repeatedly, the same cached value is returned.
    The optional parameter `updateCache` can be used to request an
    update of the cached object.
    ```Dart
@@ -69,7 +68,7 @@ use the generic class [`Lazy<T>`][Lazy].
 
 Tip: When declaring lazy variables it is useful to add the `late` modifier.
 In that case, not only the cached value but also the variable itself is
-initialized only when accessed.
+initialized only when first accessed.
 
 
 ### 2. Dependent Lazy Variables

@@ -8,19 +8,14 @@ The package [lazy_memo][lazy_memo] provides generic classes that can be used
 to define [lazy cached variables](#1-lazy-variables) and
 [memoized functions](#4-memoized-functions).
 
-Minimizing CPU and memory usage are two important goals of software optimization.
-If sufficient memory is available, costly operations
-(such as sorting a large list)
-can be avoided by storing the result and reusing it as long as the relevant
-input (e.g. the unsorted list) has not changed.
-
-The technique of storing the result of function calls
-was coined [memoization][memoization].
+Caching, consists in storing and reusing the result of a costly computation.
+The technique of storing the result of function calls is called
+[memoization][memoization].
 
 A different strategy to minimize CPU usage is to delay the
-initialization of variables.
-[Lazy initialization][lazy_initialization] is particularly
-useful in event driven scenarios where there is no definite execution path and
+initialization of variables. [Late initialization][lazy_initialization]
+is particularly useful in event driven scenarios
+where there is no definite execution path and
 a certain variable might never be used.
 
 ## Usage
@@ -32,11 +27,13 @@ in your pubspec.yaml file.
 ### 1. Lazy Variables
 
 **Important**: To define variables that are lazily initialized **once**
-simply use Dart's `late` modifier.
+simply use Dart's `late` modifier:
+```Dart
+late final result = costlyCalculation();
+```
 
 To define *cached lazy* variables that can be marked for *re-initialization*
 use the generic class [`Lazy<T>`][Lazy].
-
 
 1. Lazy variables are declared using the constructor of
    the generic class [`Lazy<T>`][Lazy].
@@ -49,7 +46,7 @@ use the generic class [`Lazy<T>`][Lazy].
    }
 
    // Defining a lazy variable that caches a value of type double.
-   final a = Lazy(objectFactory);
+   late final a = Lazy(objectFactory);
    ```
    To prevent (inadvertent) modification of the cached variable it is advisable
    to have [`ObjectFactory`][ObjectFactory] return an immutable object.
@@ -59,15 +56,20 @@ use the generic class [`Lazy<T>`][Lazy].
    // Accessing the cached value:
    a();
    ```
+   When first accessed, the cached
+   value is initialized with result of the object factory.
+   When accessed repeatedly the same cached value is returned.
+
    The optional parameter `updateCache` can be used to request an
    update of the cached object.
-   If `updateCache` is true, the object is re-initialized
-   by calling the object factory [`ObjectFactory`][ObjectFactory].
    ```Dart
    // Recalculating the stored value:
    a(updateCache: true);
    ```
 
+Tip: When declaring lazy variables it is useful to add the `late` modifier.
+In that case, not only the cached value but also the variable itself is
+initialized only when accessed.
 
 
 ### 2. Dependent Lazy Variables
@@ -147,39 +149,8 @@ Adding outliers to random sample: [1500.0, 1200.0]
 
 </details>
 
-### 3. Lazy Instance Variables
 
-It can be useful to declare *lazy* variables
-using the `late` modifier since it makes it possible to
-initialize `final` instance variables at the point of definition:
-```Dart
-import 'dart:math';
-
-import 'package:lazy_memo/lazy_memo.dart' show Lazy;
-
-final rand = Random();
-double costlyCalculation() => rand.nextDouble() * 1e20;
-
-class A {
-  late final _value = Lazy<double>(costlyCalculation);
-
-  double get value => _value();
-
-  void update() => _value.updateCache();
-}
-
-void main(List<String> args) {
-  final a = A();
-
-  // Access value:
-  print(a.value);
-  print(a.value);
-  a.update();
-  print(a.value);
-}
-```
-
-### 4. Lazy Collections
+### 3. Lazy Collections
 
 Lazy variables can be used to cache objects of type `List`, `Set`, `Map`, etc.
 However, as the example below demonstrates, the cached object *can* be modified.
@@ -198,7 +169,7 @@ Alternatively, one could use the classes `LazyList<T>`, `LazySet<T>`,
 and `LazyMap<K, V>`.
 These classes cache an unmodifiable copy of the collection.
 
-### 5. Memoized Functions
+### 4. Memoized Functions
 
 Memoized functions maintain a lookup table of previously calculated results.
 When called,

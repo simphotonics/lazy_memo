@@ -31,36 +31,49 @@ in your pubspec.yaml file.
 
 ### 1. Lazy Variables
 
-**Note**: To define variables that are going to be initalized *once*
+**Important**: To define variables that are lazily initialized **once**
 simply use Dart's `late` modifier.
 
 To define *cached lazy* variables that can be marked for *re-initialization*
 use the generic class [`Lazy<T>`][Lazy].
-I often find it useful to declare *lazy* variables
-using the *late* modifier since it makes it possible to
-initialize `final` instance variables at the point of definition.
+
 
 1. Lazy variables are declared using the constructor of
    the generic class [`Lazy<T>`][Lazy].
-2. The constructor requires a callback, [`ObjectFactory`][ObjectFactory],
+   The constructor requires a callback, [`ObjectFactory`][ObjectFactory],
    that returns an  object of type `T`.
+   ```Dart
+   double objectFactory(){
+    // Costly calculation ...
+    return calculationResult;
+   }
+
+   // Defining a lazy variable that caches a value of type double.
+   final a = Lazy(objectFactory);
+   ```
    To prevent (inadvertent) modification of the cached variable it is advisable
    to have [`ObjectFactory`][ObjectFactory] return an immutable object.
    For more info see the section [Lazy Collections](#3-lazy-collections) below.
-3. To access the cached object, the lazy variable is called like a function:
+2. To access the cached object, the lazy variable is called like a function:
    ```Dart
-   // Defining a lazy variable
-   final a = Lazy<double>((){
-       // Costly calculation ...
-       return result;
-     });
    // Accessing the cached value:
-   print(a());
+   a();
    ```
-4. The optional parameter `updateCache` can be used to request an
+   The optional parameter `updateCache` can be used to request an
    update of the cached object.
    If `updateCache` is true, the object is re-initialized
    by calling the object factory [`ObjectFactory`][ObjectFactory].
+   ```Dart
+   // Recalculating the stored value:
+   a(updateCache: true);
+   ```
+
+
+
+### 2. Dependent Lazy Variables
+
+It is possible to declare dependent lazy variables by using an
+expression containing one lazy variable to declare another lazy variable.
 
 ```Dart
 import 'dart:math';
@@ -105,19 +118,6 @@ void main() {
 }
 
 ```
-
-<br>
-
-### 2. Dependent Lazy Variables
-
-It is possible to declare dependent lazy variables by using an
-expression containing one lazy variable to declare another lazy variable.
-```Dart
-// Calculating the sample mean
-  final sampleMean = Lazy<double>(
-    () => sampleSum(updateCache: true) / sample.length,
-  );
-```
 In the code sample above, `sampleMean` depends on `sampleSum` since the callback
 passed to the constructor of `sampleMean` references `sampleSum`.
 
@@ -147,9 +147,39 @@ Adding outliers to random sample: [1500.0, 1200.0]
 
 </details>
 
-<br>
+### 3. Lazy Instance Variables
 
-### 3. Lazy Collections
+It can be useful to declare *lazy* variables
+using the `late` modifier since it makes it possible to
+initialize `final` instance variables at the point of definition:
+```Dart
+import 'dart:math';
+
+import 'package:lazy_memo/lazy_memo.dart' show Lazy;
+
+final rand = Random();
+double costlyCalculation() => rand.nextDouble() * 1e20;
+
+class A {
+  late final _value = Lazy<double>(costlyCalculation);
+
+  double get value => _value();
+
+  void update() => _value.updateCache();
+}
+
+void main(List<String> args) {
+  final a = A();
+
+  // Access value:
+  print(a.value);
+  print(a.value);
+  a.update();
+  print(a.value);
+}
+```
+
+### 4. Lazy Collections
 
 Lazy variables can be used to cache objects of type `List`, `Set`, `Map`, etc.
 However, as the example below demonstrates, the cached object *can* be modified.
@@ -168,7 +198,7 @@ Alternatively, one could use the classes `LazyList<T>`, `LazySet<T>`,
 and `LazyMap<K, V>`.
 These classes cache an unmodifiable copy of the collection.
 
-### 4. Memoized Functions
+### 5. Memoized Functions
 
 Memoized functions maintain a lookup table of previously calculated results.
 When called,
@@ -208,7 +238,7 @@ The example below demonstrates how to define the *memoized function*
   /// [ArgumentError] if a negative argument is provided.
   final factorial = MemoizedSingleArgumentFunction(
     _factorial,
-    functionTable: {12.big: 479001600.big}, 
+    functionTable: {12.big: 479001600.big},
   );
 
   // To run this program navigate to

@@ -1,7 +1,7 @@
 name: lazy_memo
 
 description: Cached lazy variables that can be marked for re-initialization and
-  memoized single and double argument functions.
+  memoized functions.
 
 version: 1.0.0
 

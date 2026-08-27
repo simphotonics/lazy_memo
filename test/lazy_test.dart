@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:lazy_memo/lazy_memo.dart';
 import 'package:test/test.dart';
 

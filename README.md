@@ -4,12 +4,13 @@
 
 ## Introduction
 
-The package [`lazy_memo`][lazy_memo] provides generic classes that can be used
+The package [lazy_memo][lazy_memo] provides generic classes that can be used
 to define [lazy cached variables](#1-lazy-variables) and
 [memoized functions](#4-memoized-functions).
 
 Minimizing CPU and memory usage are two important goals of software optimization.
-If sufficient memory is available, costly operations (such as sorting a large list)
+If sufficient memory is available, costly operations
+(such as sorting a large list)
 can be avoided by storing the result and reusing it as long as the relevant
 input (e.g. the unsorted list) has not changed.
 
@@ -46,13 +47,20 @@ initialize `final` instance variables at the point of definition.
    To prevent (inadvertent) modification of the cached variable it is advisable
    to have [`ObjectFactory`][ObjectFactory] return an immutable object.
    For more info see the section [Lazy Collections](#3-lazy-collections) below.
-3. To access the cached object, the lazy variable is called like a function
-   (see example below).
+3. To access the cached object, the lazy variable is called like a function:
+   ```Dart
+   // Defining a lazy variable
+   final a = Lazy<double>((){
+       // Costly calculation ...
+       return result;
+     });
+   // Accessing the cached value:
+   print(a());
+   ```
 4. The optional parameter `updateCache` can be used to request an
    update of the cached object.
    If `updateCache` is true, the object is re-initialized
-   by calling the object factory [`ObjectFactory`][ObjectFactory] with the
-   current value of the input arguments.
+   by calling the object factory [`ObjectFactory`][ObjectFactory].
 
 ```Dart
 import 'dart:math';
@@ -176,10 +184,8 @@ Examples include: repeatedly accessing statistics of a large
 data sample, calculating the factorial of an integer,
 repeatedly evaluating higher degree polynomials.
 
-The example below demonstrates how to define the *memoized functions*
-`factorial(n)` and `combinations(n, k)`, k-combinations of n objects.
-Note: For the sake of simplicity, validation of arguments is omitted. A
-complete version of these functions is provided with the library
+The example below demonstrates how to define the *memoized function*
+`factorial(n)`. This function is included in the library
 [`utils.dart`][utils].
 
 <details>  <summary> Click to show souce code. </summary>
@@ -202,7 +208,7 @@ complete version of these functions is provided with the library
   /// [ArgumentError] if a negative argument is provided.
   final factorial = MemoizedSingleArgumentFunction(
     _factorial,
-    functionTable: {12.big: 479001600.big},
+    functionTable: {12.big: 479001600.big}, 
   );
 
   // To run this program navigate to

@@ -7,6 +7,7 @@ void main() {
       expect(factorial(BigInt.zero), BigInt.one);
       expect(factorial(BigInt.one), BigInt.one);
       expect(factorial(7.big), (1 * 2 * 3 * 4 * 5 * 6 * 7).big);
+      expect(factorial(50.big), factorial(49.big) * 50.big);
     });
     test('throws on negative arg', () {
       expect(() => factorial(-1.big), throwsA(isA<ArgumentError>()));
@@ -17,6 +18,10 @@ void main() {
       expect(combinations(10.big, 5.big), 252.big);
       expect(combinations(BigInt.zero, BigInt.zero), BigInt.one);
       expect(combinations(BigInt.one, BigInt.zero), BigInt.one);
+      expect(
+        combinations(20.big, 10.big),
+        combinations(19.big, 9.big) + combinations(19.big, 10.big),
+      );
     });
     test('symmetry', () {
       expect(combinations(10.big, 7.big), combinations(10.big, 3.big));

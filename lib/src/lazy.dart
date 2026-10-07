@@ -3,116 +3,51 @@ typedef ObjectFactory<T> = T Function();
 
 /// A class that caches an object of type [T].
 /// The cache is populated when the object is first accessed.
-class Lazy<T> {
-  /// Constructs a lazy object.
-  new(this.objectFactory);
-
+class Lazy<T>(
   /// Callback used to create the cached object.
-  final ObjectFactory<T> objectFactory;
+  final ObjectFactory<T> objectFactory,
+) {
+  /// The cached object.
+  T? _cache;
 
-  late T _cache;
-  bool _isUpToDate = false;
+  /// Returns `true` if the cache was not yet initialized or if
+  /// the cache was marked stale by calling [invalidateCache].
+  bool get isStale => _cache == null;
+
+  /// The cached value of the lazy object.
+  T get value {
+    if (_cache == null) {
+      return _cache = objectFactory();
+    } else {
+      return _cache!;
+    }
+  }
 
   /// Returns the cached object.
   /// * The object is initialized when first accessed.
   /// * To re-initialize the cached object use the
-  ///   optional parameter `updateCache`.
+  ///   optional parameter [updateCache].
   T call({bool updateCache = false}) {
-    if (updateCache || !_isUpToDate) {
-      _isUpToDate = true;
-      return _cache = objectFactory();
-    } else {
-      return _cache;
-    }
+    if (updateCache) return _cache = objectFactory();
+    return value;
   }
 
-  /// After calling this function the cached object will be
-  /// (lazily) re-initialized when it is next accessed.
-  void updateCache() {
-    _isUpToDate = false;
-  }
-
-  /// Returns `true` if the cached object has been initialized and is
-  /// up-to-date.
-  bool get isUpToDate => _isUpToDate;
-
-  @override
-  String toString() {
-    return 'Lazy<$T>: ${call()}';
-  }
-}
-
-/// A lazy variable that caches a list with entries of type [T].
-///
-/// * An unmodifiable list view is returned to prevent modification of the cache.
-/// * The same object is returned until an update of the cache is requested by
-/// calling the method `updateCache()` or using the optional parameter
-/// `updateCache: true` to access the cached variable.
-class LazyList<T> extends Lazy<List<T>> {
-  /// Constructs an object of type [LazyList] with type argument [T].
-  new(super.objectFactory);
-
-  @override
-  List<T> call({bool updateCache = false}) {
-    if (updateCache || !_isUpToDate) {
-      _isUpToDate = true;
-      _cache = List.unmodifiableOf(objectFactory());
-    }
-    return _cache;
+  /// Marks the cache as stale. After calling this function the
+  /// cached object will be
+  /// (lazily) re-initialized when next accessed.
+  void invalidateCache() {
+    _cache = null;
   }
 
   @override
   String toString() {
-    return 'LazyList<$T>: ${call()}';
-  }
-}
-
-/// A lazy variable that caches a set with entries of type [T].
-///
-/// * An unmodifiable set view is returned to prevent modification of the cache.
-/// * The same object is returned until an update of the cache is requested by
-/// calling the method [updateCache] or using the optional parameter
-/// [updateCache] : true to access the cached variable.
-class LazySet<T> extends Lazy<Set<T>> {
-  /// Constructs an object of type [LazySet] with type argument [T].
-  new(super.objectFactory);
-
-  @override
-  Set<T> call({bool updateCache = false}) {
-    if (updateCache || !_isUpToDate) {
-      _isUpToDate = true;
-      _cache = Set.unmodifiable(objectFactory());
-    }
-    return _cache;
+    // Note: _cache might not be initialized yet.
+    return '$runtimeType: \n  $value}';
   }
 
-  @override
-  String toString() {
-    return 'LazySet<$T>: ${call()}';
-  }
-}
-
-/// A lazy variable that caches a map of type `Map<K, V>`.
-///
-/// * An unmodifiable map view is returned to prevent modification of the cache.
-/// * The same object is returned until an update of the cache is requested by
-/// calling the method `updateCache()` or using the optional parameter
-/// `updateCache: true` to access the cached variable.
-class LazyMap<K, V> extends Lazy<Map<K, V>> {
-  /// Constructs an object of type [LazyMap].
-  new(super.objectFactory);
-
-  @override
-  Map<K, V> call({bool updateCache = false}) {
-    if (updateCache || !_isUpToDate) {
-      _isUpToDate = true;
-      _cache = Map.unmodifiableOf(objectFactory());
-    }
-    return _cache;
-  }
-
-  @override
-  String toString() {
-    return 'LazyMap<$K, $V>: ${call()}';
-  }
+  /// Creates an error message and returns an [UnsupportedError].
+  UnsupportedError unsupportedError() => UnsupportedError(
+    'Cannot modify a $runtimeType. \n '
+    '                      The cached object of type \'$T\' is unmodifiable.',
+  );
 }

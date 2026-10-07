@@ -12,7 +12,7 @@ $ dart example/bin/lazy_example.dart
 ```
 The file [`memoized_function_example.dart`][memoized_function_example.dart]
 (see folder *bin*) contains a short program that demonstrates how to
-define and use lazy (memoized) functions.
+define and use memoized functions.
 
 The program can be run in a terminal by navigating to the
 root folder of your local copy of the package

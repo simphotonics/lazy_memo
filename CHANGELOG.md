@@ -1,3 +1,14 @@
+# 2.0.0
+* The following changes were made to the class `Lazy`:
+   - Replaced the function `updateCache()` with the more suggestive
+     `invalideCache()`.
+   - Added the getter `isStale` and removed `isUpToDate`.
+   - Added the getter `value` returning the cached value of the lazy variable.
+
+* The classes `LazyList`, `LazySet`, and `LazyMap` now declared `with` `ListMixin`,
+  `SetMixin`, and `MapMixin`, respectively. Thus they can be treated like
+  unmodifiable collections when it comes to elements access, length, and the associated collection methods.
+
 # 1.0.0
 - Added `GenericMemoizedFunction`, a memoized generic function without
   arguments.

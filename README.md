@@ -41,7 +41,7 @@ use the generic class [`Lazy<T>`][Lazy].
    ```
    To prevent (inadvertent) modification of the cached variable it is advisable
    to have [`ObjectFactory`][ObjectFactory] return an immutable object.
-   For more info see the section [Lazy Collections](#3-lazy-collections) below.
+   For more info see the section [Lazy Collections](#2-lazy-collections) below.
 2. To access the cached object, the lazy variable is called like a function:
    ```Dart
    // Accessing the cached value:

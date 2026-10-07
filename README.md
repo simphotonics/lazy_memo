@@ -3,8 +3,9 @@
 [![Dart](https://github.com/simphotonics/lazy_memo/actions/workflows/dart.yml/badge.svg)](https://github.com/simphotonics/lazy_memo/actions/workflows/dart.yml)
 
 ## Introduction
-[Lazy cached variables](#1-lazy-variables) can be used to store and reuse
-the result of a costly computation.
+[Lazy variables](#1-lazy-variables) can be used to store and reuse
+the result of a costly computation. The cached value can be invalidated
+triggering a cache-refresh.
 
 [Memoized functions](#3-memoized-functions) can be used to store
 and recall the result of function calls.

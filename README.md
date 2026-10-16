@@ -73,8 +73,8 @@ Tip: When declaring lazy variables it is useful to add the `late` modifier.
 In that case, not only the cached value but also the lazy variable itself is
 initialized only when first accessed.
 
-The extension type [LazyPool][LazyPool] represents a set of lazy variables,
-providing the method `invalidateCache` to collectively invalidate the cache
+The extension type [LazyPool][LazyPool] represents a set of lazy variables. It
+provides the method `invalidateCache` to collectively invalidate the cache
 of all variables in the pool.
 
 ### 2. Lazy Collections
@@ -278,7 +278,7 @@ Please file feature requests and bugs at the [issue tracker].
 
 [lazy_initialization]: https://en.wikipedia.org/wiki/Lazy_initialization
 
-[lazy_pool]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/LazyPool-class.html
+[LazyPool]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/LazyPool-extension-type.html
 
 [Lazy]: https://pub.dev/documentation/lazy_memo/latest/lazy_memo/Lazy-class.html
 

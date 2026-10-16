@@ -1,3 +1,7 @@
+# 2.0.1
+* Added the extension type `LazyPool` representing a set of lazy variables
+  with a collective `invalidateCache` method. 
+
 # 2.0.0
 * The following changes were made to the class `Lazy`:
    - Replaced the function `updateCache()` with the more suggestive
